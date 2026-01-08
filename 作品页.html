@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!-- 网页文档声明+语言设置 中文 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 核心响应式配置：适配所有移动设备 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人作品集</title>
+    <link rel="shortcut icon" href="211.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <style>
+        /* 全局样式重置，清除默认边距和间距，统一页面基准 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", "宋体", sans-serif;
+        }
+
+        /* 页面主体样式 - 核心高级渐变背景，全屏显示，平滑滚动 */
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            scroll-behavior: smooth;
+        }
+
+        /* 页面容器 - 居中显示，限定最大宽度，留白更高级 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 顶部导航栏样式 */
+        nav {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 18px 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        nav h2 {
+            color: #333;
+            font-size: 22px;
+            letter-spacing: 2px;
+        }
+
+        /* 头部介绍区样式 */
+        .header {
+            background-color: #fff;
+            padding: 50px 30px;
+            border-radius: 24px;
+            text-align: center;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .header:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+        .header h1 {
+            color: #2d3748;
+            font-size: 32px;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .header p {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* 通用标题样式 - 所有区块的标题统一风格 */
+        .section-title {
+            text-align: center;
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 35px;
+            letter-spacing: 1px;
+        }
+
+        /* 技能卡片布局 - 弹性布局，自动换行，适配所有屏幕 */
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        /* 核心卡片样式 - 精美通透，鼠标悬停有动画特效 */
+        .skill-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            width: 280px;
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        /* 鼠标悬停动画：上浮+放大+加深阴影，核心精美特效 */
+        .skill-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        .skill-card h3 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .skill-card p {
+            color: #777;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* 作品展示区布局 - 和技能区统一风格，保持页面一致性 */
+        .projects {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        /* 作品卡片样式 */
+        .project-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            width: 320px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            transition: all 0.4s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        /* 作品图片样式，保持比例不变形 */
+        .project-img {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+        }
+        .project-card .info {
+            padding: 20px;
+        }
+        .project-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 19px;
+        }
+        .project-card p {
+            color: #777;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* 底部信息区 */
+        footer {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 16px;
+            margin-top: 30px;
+        }
+
+        /* 响应式适配：手机端自动调整样式，完美显示 */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 26px; }
+            .header p { font-size: 16px; }
+            .skill-card, .project-card { width: 90%; }
+            nav h2 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部导航栏 -->
+        <nav>
+            <h2>我的个人作品集 | HTML精美作品</h2>
+        </nav>
+
+        <!-- 头部介绍区域 -->
+        <section class="header">
+            <h1>热爱编程 · 专注前端 · 追求极致</h1>
+            <p>这是一个使用纯HTML+CSS制作的精美网页作品，包含了现代化的渐变背景、卡片布局、悬停动画和响应式适配，所有设计均为高级质感风格，无任何冗余代码。</p>
+        </section>
+
+        <!-- 技能展示区域 -->
+        <section>
+            <h2 class="section-title">✨ 我的核心技能</h2>
+            <div class="skills">
+                <div class="skill-card">
+                    <h3>HTML5 基础</h3>
+                    <p>精通HTML5语义化标签，能够搭建结构清晰、规范的网页骨架，遵循W3C标准开发。</p>
+                </div>
+                <div class="skill-card">
+                    <h3>CSS3 样式</h3>
+                    <p>熟练使用CSS3实现渐变、圆角、阴影、动画等效果，精通弹性布局和响应式适配。</p>
+                </div>
+                <div class="skill-card">
+                    <h3>网页设计</h3>
+                    <p>掌握现代网页的色彩搭配、排版布局，能制作出美观、舒适、用户体验极佳的页面。</p>
+                </div>
+                <div class="skill-card">
+                    <h3>前端进阶</h3>
+                    <p>持续学习JavaScript和框架，不断提升技术能力，致力于打造更优秀的前端作品。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 作品展示区域 -->
+        <section>
+            <h2 class="section-title">📌 我的代表作品</h2>
+            <div class="projects">
+                <div class="project-card">
+                    <div class="project-img">精美个人主页</div>
+                    <div class="info">
+                        <h3>个人介绍网站</h3>
+                        <p>使用HTML+CSS制作的响应式个人主页，包含完整的介绍、技能和作品展示模块。</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">响应式商城页面</div>
+                    <div class="info">
+                        <h3>电商商品展示页</h3>
+                        <p>卡片式商品布局，适配手机和电脑，带有悬停高亮效果，购物体验极佳。</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">动画特效合集</div>
+                    <div class="info">
+                        <h3>CSS动画展示站</h3>
+                        <p>集合多种CSS3动画效果，包含过渡、变形、旋转等，页面动态感拉满。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 底部信息 -->
+        <footer>
+            <p>© 2026 时海政的个人简历 | 基于博客教程创建</p>
+        </footer>
+    </div>
+</body>
+</html>

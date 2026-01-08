@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人博客</title>
+    <link rel="shortcut icon" href="211.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 全局重置 & 变量定义（补充缺失的基础变量） */
+        :root {
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --primary-color: #3498db;
+            --accent-color: red;
+            --transition: all 0.3s ease;
+            --gray-color: #f1f1f1;
+            --glow: 0 0 10px rgba(56, 113, 235, 0.5);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* 解决盒模型导致的尺寸溢出 */
+        }
+        body {
+            min-height: 100vh;
+            overflow-x: hidden; /* 防止移动端横向滚动 */
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+            box-shadow: 0px 2px 0px rgb(161, 156, 156);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            height: 65px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .logo a {
+            text-decoration: none;
+        }
+        .logo img {
+            width: 100px;
+            margin-right: 80px;
+            border-radius: 50%;
+        }
+        .logo-text {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-left: -80px;
+        }
+
+        /* 导航栏容器 */
+        .navbar {
+            background: linear-gradient(90deg,#1a2b4c,#2d4068);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%; /* 确保导航栏占满宽度 */
+            height: 90px;
+        }
+
+        /* 桌面端菜单 */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        /* 汉堡按钮样式 */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 0.3rem;
+            z-index: 1001; /* 确保汉堡按钮在菜单上层 */
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #ffffff; /* 修正颜色：原灰色在深色导航栏看不清 */
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        /* 响应式：移动端适配 */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 250px;
+                background-color: #41546f;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in;
+                z-index: 999;
+                padding: 0; /* 重置内边距 */
+                margin: 0; /* 重置外边距 */
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            /* 菜单展开状态 */
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            /* 汉堡按钮动画：变成叉号 */
+            .hamburger.active div:nth-child(1) {
+                transform: rotate(45deg) translateY(6px); /* 修正偏移值：原8px在小屏错位 */
+            }
+
+            .hamburger.active div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active div:nth-child(3) {
+                transform: rotate(-45deg) translateY(-6px); /* 修正偏移值 */
+            }
+
+            /* 移动端logo适配：减少间距，防止溢出 */
+            .logo img {
+                width: 60px;
+                margin-right: 20px;
+            }
+            .logo-text {
+                margin-left: -20px;
+                font-size: 1rem;
+            }
+
+            /* 移动端Hero区域适配：解决高度过高导致内容挤压 */
+            .hero {
+                height: 280px !important; /* 降低移动端高度 */
+                margin-top: 0 !important; /* 移除负值margin导致的重叠 */
+                padding: 3rem 0 !important;
+            }
+            .hero-text {
+                margin-top: 150px !important; /* 修正文字定位 */
+            }
+            .hero-text h1 {
+                font-size: 2rem; /* 缩小标题字体 */
+            }
+            .hero-text p {
+                font-size: 1rem;
+            }
+
+            /* 移动端底部信息区适配：解决高度固定导致的重叠 */
+            .info {
+                height: auto !important; /* 移除固定高度，自适应内容 */
+                padding: 20px 15px;
+                margin-top: 20px;
+            }
+            .info ul {
+                grid-template-columns: 1fr; /* 移动端单列显示，防止换行重叠 */
+                gap: 10px;
+            }
+
+            /* 移动端footer适配：修正内边距，防止内容重叠 */
+            footer {
+                padding: 2rem 5% !important;
+            }
+            .social-links {
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+            .copyright {
+                margin-top: 0 !important;
+            }
+        }
+
+        /* 导航下划线样式（统一优先级） */
+        ul li:not(:first-child) a::after {
+            content: "";
+            width: 0;
+            height: 3px;
+            background-color: red;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            transition: width 0.3s linear;
+        }
+        ul li:not(:first-child) a:hover {
+            color: red;
+        }
+        ul li:not(:first-child) a:hover::after {
+            width: 100%;
+        }
+        ul li:nth-child(4) a {
+            color: red;
+            border-bottom: 3px solid red;
+        }
+
+        /* Hero区域（修正重复定义） */
+        .hero {
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+            height: 600px;
+            margin-top: -20px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-image: url(203.jpg);
+        }
+
+        .hero-content {
+            top: 10px;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-text {
+            margin-top: 280px;
+        }
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            animation: fadeInUp 0.8s ease-out;
+            color: #f9f9fb;
+            text-align: center;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+            color: rgb(251, 251, 250);
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        /* 工作经验区样式 */
+        .experience {
+            background: white;
+            padding: 25px;
+            border-radius: 10px; /* 修正原10рх拼写错误 */
+            margin-bottom: 30px; /* 修正原30pх拼写错误 */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+            margin: 0 15px 30px; /* 移动端增加左右边距，防止贴边 */
+        }
+
+        .experience h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .job {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .job-title {
+            font-weight: bold;
+            color: #495057;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        .job-company {
+            color: #6c757d;
+            margin-bottom: 10px; /* 修正原10pх拼写错误 */
+            font-style: italic;
+            color: #868e96;
+            font-size: 0.9em;
+        }
+
+        .job-description {
+            color: #495057;
+            line-height: 1.5;
+        }
+
+        /* 技能区样式 */
+        .skills {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+            margin: 0 15px 30px; /* 移动端增加左右边距 */
+        }
+        .skills h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+        .skills ul {
+            list-style: none;
+        }
+        .skills li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .skills-name { /* 修正原skill-name拼写错误 */
+            font-weight: bold;
+            min-width: 120px;
+            color: #495057;
+        }
+        progress {
+            flex: 1;
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 15px;
+        }
+        progress::-webkit-progress-bar {
+            background-color: #e9ecef;
+            border-radius: 10px;
+        }
+        progress::-webkit-progress-value {
+            background: linear-gradient(90deg,#667eea,#764ba2);
+        }
+        progress::-moz-progress-bar {
+            background: linear-gradient(90deg,#667eea,#764ba2);
+        }
+        .skills-percent {
+            font-weight: bold;
+            color: #667eea;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* 教育背景样式 */
+        .education {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+            margin: 0 15px 30px; /* 移动端增加左右边距 */
+        }
+
+        .education h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .edu-item {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #28a745;
+        }
+
+        /* 联系方式样式 */
+        .info {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+            margin-top: 40px;
+            height: 230px;
+            margin: 0 15px 30px; /* 移动端增加左右边距 */
+        }
+        .info h2 {
+            background: #667eea;
+            padding: 15px;
+            font-size: 1.5em;
+            color: white; /* 补充文字颜色，原白色背景下看不见 */
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .info ul {
+            list-style: none;
+            display: grid;
+            gap: 15px;
+            grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+        }
+        .info li {
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .info li:hover {
+            transform: translateY(-2px);
+        }
+
+        /* 页脚样式 */
+        footer {
+            background: #2c3e50;
+            padding: 4rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px; /* 增加顶部间距，防止与内容重叠 */
+        }
+
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: white; /* 修正原背景裁剪文字不可见问题 */
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .social-link {
+            font-size: 1.8rem;
+            color: rgba(255,255,255,0.6); /* 修正原黑色在深色背景看不清 */
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.2);
+            color: rgb(56, 113, 235);
+            text-shadow: var(--glow);
+        }
+
+        .copyright {
+            color: rgba(255,255,255,0.6); /* 修正原黑色在深色背景看不清 */
+            font-size: 0.9rem;
+            margin-top: -20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html" class="text">
+                    <img src="211.png" alt="logo">
+                </a>
+                <a href="index.html" class="logo-text">博客主页</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="博客.html">博客</a></li>
+                <li><a href="作品集.html">作品集</a></li>
+                <li><a href="关于我.html">关于我</a></li>
+                <li><a href="文章示例.html">文章示例</a></li>
+            </ul>
+            <div class="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // 修复汉堡菜单逻辑：增加防重复点击、优化移动端触摸事件
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        let isMenuOpen = false;
+
+        // 点击汉堡按钮切换菜单
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation(); // 防止事件冒泡
+            isMenuOpen = !isMenuOpen;
+            navLinks.classList.toggle('active', isMenuOpen);
+            hamburger.classList.toggle('active', isMenuOpen);
+            // 菜单展开时禁止页面滚动
+            document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
+        });
+
+        // 点击菜单链接关闭菜单
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // 点击页面空白处关闭菜单
+        document.addEventListener('click', (e) => {
+            if (isMenuOpen && !hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+                isMenuOpen = false;
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // 适配移动端触摸事件
+        hamburger.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            isMenuOpen = !isMenuOpen;
+            navLinks.classList.toggle('active', isMenuOpen);
+            hamburger.classList.toggle('active', isMenuOpen);
+            document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
+        });
+    </script>
+
+    <div class="content">
+        <section class="hero">
+            <div class="hero-text">
+                <h1>你好<br>我是<span style="color: #dae860;">时海政</span></h1>
+                <p>创新性人才，思维敏捷，保持对任何事物的新鲜感与好奇心</p>
+            </div>
+        </section>
+    </div>
+
+    <section class="skills">
+        <h3>⚡ 技能图谱</h3>
+        <ul>
+            <li>
+                <span class="skills-name">HTML5</span>
+                <progress value="90" max="100"></progress>
+                <span class="skills-percent">90%</span>
+            </li>
+            <li>
+                <span class="skills-name">CSS3</span>
+                <progress value="85" max="100"></progress>
+                <span class="skills-percent">85%</span>
+            </li>
+            <li>
+                <span class="skills-name">JavaScript</span>
+                <progress value="80" max="100"></progress>
+                <span class="skills-percent">80%</span>
+            </li>
+            <li>
+                <span class="skills-name">React</span>
+                <progress value="75" max="100"></progress>
+                <span class="skills-percent">75%</span>
+            </li>
+            <li>
+                <span class="skills-name">Node.js</span>
+                <progress value="70" max="100"></progress>
+                <span class="skills-percent">70%</span>
+            </li>
+            <li>
+                <span class="skills-name">Python</span>
+                <progress value="65" max="100"></progress>
+                <span class="skills-percent">65%</span>
+            </li>
+        </ul>
+    </section>
+
+    <section class="experience">
+        <h3>💼  工作经验</h3>
+        <div class="job">
+            <div class="job-title">优秀前端开发工程师</div>
+            <div class="job-company">重庆安防职业技术学院</div>
+            <div class="job-period">2025年9月 - 至今</div>
+            <div class="job-description">
+                多次参与院级校级技能大赛，带领3人团队斩获各类奖项，完成多项重要项目，产品优化提高20%
+            </div>
+        </div>
+        <div class="job">
+            <div class="job-title">前端开发技术高足</div>
+            <div class="job-company">小米产业学院</div>
+            <div class="job-period">2025年9月 -至今</div>
+            <div class="job-description">
+                师承高级前端开发工程师，技术掌握流畅，帮助多个团队完成院级项目
+            </div>
+        </div>
+    </section>
+
+    <section class="education">
+        <h3>🧑‍🎓  教育背景</h3>
+        <div class="edu-item">
+            <div class="job-title">前端开发设计学员</div>
+            <div class="job-company">人工智能学院</div>
+            <div class="job-period">2025年9月- 至今</div>
+            <div class="job-description">
+                主修网页前端开发,辅修数字平面设计,
+                受首席前端开发人员彭孝东先生，李天映先生指导
+                斩获校级技能大赛各类奖项。
+            </div>
+        </div>
+    </section>
+
+    <section class="info">
+        <h2>📮 联系方式</h2>
+        <ul>
+            <li>📫 邮箱：2489013285@qq.com</li>
+            <li>☎️ 电话：17726617431</li>
+            <li>📡 地址：重庆安防职业学院</li>
+            <li>🌐 个人网站:</li>
+            <li>💼 GitHub:</li>
+            <li>✖️ Twitter:@shiyi202121</li>
+            <li>💌邮箱:shiyi202121@outlook.com</li>
+        </ul>
+    </section>
+
+    <footer id="contact">
+        <h3 class="footer-title">邮箱：2489013285@qq.com</h3>
+        <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+            <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p class="copyright"> © 2026 时海政的个人简历 | 基于博客教程创建</p>
+    </footer>
+</body>
+</html>

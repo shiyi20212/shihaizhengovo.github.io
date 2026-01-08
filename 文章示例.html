@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章示例</title>
+   <link rel="shortcut icon" href="211.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <style>
+        /* 全局样式重置与基础配置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", "PingFang SC", "Helvetica Neue", sans-serif;
+        }
+        :root {
+            --primary-color: #2563eb; /* 主色调-蓝色 */
+            --secondary-color: #f97316; /* 辅助色-橙色 */
+            --dark-color: #1e293b; /* 深色文本 */
+            --light-color: #64748b; /* 浅色文本 */
+            --bg-light: #f8fafc; /* 浅色背景 */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+            --transition: all 0.3s ease;
+        }
+        body {
+            background-color: var(--bg-light);
+            color: var(--dark-color);
+            line-height: 1.8;
+        }
+
+        
+
+        
+        /* 文章容器 */
+        .article-container {
+            max-width: 1100px;
+            margin: 0 auto 100px;
+            padding: 0 20px;
+        }
+
+        /* 内容卡片 */
+        .content-card {
+            background-color: #fff;
+            border-radius: 16px;
+            padding: 50px;
+            margin-bottom: 50px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .content-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* 标题样式 */
+        .card-title {
+            font-size: 32px;
+            color: var(--dark-color);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary-color);
+            display: inline-block;
+        }
+        .sub-title {
+            font-size: 24px;
+            color: var(--dark-color);
+            margin: 35px 0 20px;
+            position: relative;
+            padding-left: 20px;
+        }
+        .sub-title::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 24px;
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+        }
+
+        /* 文本与列表 */
+        .card-text {
+            font-size: 17px;
+            color: var(--light-color);
+            line-height: 2;
+            margin-bottom: 25px;
+        }
+        .card-list {
+            list-style: none;
+            margin: 20px 0 30px;
+        }
+        .card-list li {
+            padding: 12px 0 12px 35px;
+            position: relative;
+            color: var(--light-color);
+            font-size: 17px;
+        }
+        .card-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 12px;
+            color: var(--primary-color);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* 代码块样式 */
+        .code-block {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 30px;
+            border-radius: 12px;
+            font-family: "Consolas", "Monaco", monospace;
+            font-size: 16px;
+            line-height: 1.8;
+            overflow-x: auto;
+            margin: 30px 0;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        /* 示例演示区 */
+        .demo-box {
+            background-color: #f1f5f9;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .demo-btn {
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .demo-btn:hover {
+            background-color: #1d4ed8;
+            transform: scale(1.05);
+        }
+        .demo-text {
+            margin-top: 20px;
+            font-size: 16px;
+            color: var(--dark-color);
+        }
+
+        /* 强调提示框 */
+        .tip-box {
+            background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            border-left: 5px solid var(--secondary-color);
+        }
+        .tip-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+        .tip-text {
+            font-size: 16px;
+            color: var(--dark-color);
+            line-height: 1.8;
+        }
+        nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    height: 90px;
+    
+}
+
+.logo {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+             
+
+.logo a {
+    text-decoration: none;
+}
+.logo img {
+    width: 100px;
+            margin-right: 80px;
+            border-radius: 50%;
+            margin-top: 10px;
+}
+.logo-text {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-left: -80px;
+            
+            
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+
+    
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: var(--accent-color);
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+/* 导航栏容器 */
+        .navbar {
+          background: linear-gradient(90deg,#1a2b4c,#2d4068);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+        }
+
+       
+        
+       
+       
+
+        /* 桌面端菜单 */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+    font-weight: 600;
+    transition: var(--transition);
+    position: relative;
+    padding: 0.5rem 0;
+}
+        
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        /* 汉堡按钮样式 */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: rgb(171, 150, 150);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        /* 响应式：移动端隐藏菜单，显示汉堡按钮 */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 250px;
+                background-color: #41546f;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in;
+                z-index: 999;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            /* 菜单展开状态 */
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            /* 汉堡按钮动画：变成叉号 */
+            .hamburger.active div:nth-child(1) {
+                transform: rotate(45deg) translateY(8px);
+            }
+
+            .hamburger.active div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active div:nth-child(3) {
+                transform: rotate(-45deg) translateY(-8px);
+            }
+        }
+         ul li:not(:first-child) a::after{
+        /* 设置内容为空 */
+        content: "";
+        width: 0;
+        height: 3px;
+        /* 设置背景颜色 */
+        background-color: red;
+        /* 子元素设置绝对定位 */
+        position:absolute;
+        left: 0;
+        bottom: 0;
+        /* 设置过度效果 */
+        transition: width 0.3s linear;
+    }
+    ul li:not(:first-child) a:hover{
+        color: red;
+    }
+    ul li:not(:first-child) a:hover::after{
+        width: 100%;
+    }
+    ul li:nth-child(5) a {
+        color: red;
+        border-bottom: 3px solid red;
+    }
+    .header {
+       
+    background-color: white;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    animation: slideDown 0.5s ease-out;
+    box-shadow: 0px 2px 0px rgb(161, 156, 156);
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+ /* 视频父容器：控制背景范围（这里设为全屏） */
+.video-bg-container {
+  position: relative; /* 让视频的绝对定位相对于自己 */
+  width: 100%;
+  min-height: 100vh; /* 占满整个视口高度 */
+  overflow: hidden; /* 隐藏视频超出容器的部分 */
+}
+
+/* 背景视频：铺满容器、置于下层 */
+.video-bg {
+  position: absolute; /* 脱离文档流，作为背景 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 85%;
+  object-fit: cover; /* 保持视频比例，填满容器（自动裁剪边缘） */
+  z-index: -1; /* 层级设为负数，让内容叠在上面 */
+}
+
+/* 页面内容：确保在视频上方，可自定义样式 */
+.content {
+  position: relative; /* 确保层级高于视频 */
+  padding: 50px;
+  color: #fff; /* 文字设为白色，避免和视频混在一起 */
+  text-align: center;
+} 
+.banner {
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+      margin-top: 26px;
+    }
+    .banner h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #e4e6e1;
+     
+    }
+    .banner p {
+      font-size: 18px;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+    footer {
+      background: #2c3e50;
+      padding: 4rem 5%;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: rgb(28, 28, 28);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .social-link {
+      font-size: 1.8rem;
+      color: rgb(7, 7, 7,0.6);
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.2);
+      color: rgb(56, 113, 235);
+      text-shadow: var(--glow);
+    }
+
+    .copyright {
+      color: rgba(7, 7, 7, 0.6);
+      font-size: 0.9rem;
+      margin-top: -20px;
+    }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="header">
+        <nav class="navbar">
+        <div class="logo">
+            <a href="index.html" class="text">
+                <img src="211.png" alt="">
+            </a>
+        <a href="index.html" class="logo-text">博客主页</a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="博客.html">博客</a></li>
+            <li><a href="作品集.html">作品集</a></li>
+            <li><a href="关于我.html">关于我</a></li>
+            <li><a href="文章示例.html">文章示例</a></li>
+        </ul>
+        <div class="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </nav>
+    </div>
+    <script>
+        // 获取元素
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        // 点击汉堡按钮切换菜单状态
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // 点击菜单链接关闭菜单
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+    </script>
+    
+    </div>
+    
+    <!-- 背景视频的父容器：控制视频的范围（比如全屏背景） -->
+<div class="video-bg-container">
+  <!-- 背景视频 -->
+  <video class="video-bg" autoplay muted loop playsinline poster="封面图.jpg">
+    <!-- 提供不同格式的视频，兼容更多浏览器 -->
+    <source src="作品集视频.mp4" type="video/mp4">
+    
+  </video>
+
+  <!-- 页面内容：叠在视频上方 -->
+  <div class="content">
+    <!-- 首页Banner -->
+  <section class="banner" id="home">
+    <div class="container">
+      <h1>前端开发设计</h1>
+      <p>从结构搭建到视觉呈现，再到交互赋能，详解前端开发设计的核心逻辑与实战技巧</p>
+    </div>
+  </section>
+  </div>
+</div>
+
+    
+
+    <!-- 文章核心内容 -->
+    <main class="article-container">
+        <!-- 第一部分：HTML - 前端设计的骨架基石 -->
+        <section class="content-card">
+            <h2 class="card-title">一、HTML：前端设计的骨架基石</h2>
+            <p class="card-text">HTML（超文本标记语言）是前端页面的“骨架”，决定了页面的结构和语义，优秀的HTML结构不仅是视觉呈现的基础，更是可访问性、SEO优化的核心。前端开发设计中，HTML的设计核心是<strong>语义化</strong>——用正确的标签表达正确的内容，而非单纯依赖div+span堆砌。</p>
+
+            <h3 class="sub-title">1. 语义化HTML的设计原则</h3>
+            <ul class="card-list">
+                <li>用header/footer定义页面头部/底部，替代无意义的div；</li>
+                <li>用nav定义导航区域，提升爬虫识别和屏幕阅读器兼容性；</li>
+                <li>用article/section区分独立内容块，让结构更清晰；</li>
+                <li>用button而非div做可点击按钮，兼顾交互和可访问性。</li>
+            </ul>
+
+            <h3 class="sub-title">2. 实战示例：语义化页面结构</h3>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;语义化页面示例&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header class="page-header"&gt;
+        &lt;h1&gt;前端开发设计博客&lt;/h1&gt;
+        &lt;nav class="main-nav"&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="#"&gt;首页&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#"&gt;博客&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+    
+    &lt;main class="content"&gt;
+        &lt;article class="blog-post"&gt;
+            &lt;h2&gt;前端开发设计核心思路&lt;/h2&gt;
+            &lt;section class="post-content"&gt;
+                &lt;p&gt;HTML搭建骨架，CSS美化外观，JS赋予交互...&lt;/p&gt;
+            &lt;/section&gt;
+        &lt;/article&gt;
+    &lt;/main&gt;
+    
+    &lt;footer class="page-footer"&gt;
+        &lt;p&gt;© 2025 前端技术博客 保留所有权利&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-title">💡 设计小贴士</div>
+                <div class="tip-text">语义化HTML不仅能提升代码可读性，还能让搜索引擎更好地理解页面内容（提升SEO），同时适配屏幕阅读器等辅助工具，兼顾无障碍设计。</div>
+            </div>
+        </section>
+
+        <!-- 第二部分：CSS - 前端设计的视觉外衣 -->
+        <section class="content-card">
+            <h2 class="card-title">二、CSS：前端设计的视觉外衣</h2>
+            <p class="card-text">CSS（层叠样式表）是前端页面的“外衣”，负责将HTML骨架赋予视觉美感，现代前端设计中，CSS的核心是<strong>模块化、响应式、动效优雅</strong>，既要保证视觉一致性，又要适配不同设备。</p>
+
+            <h3 class="sub-title">1. 现代CSS设计核心技巧</h3>
+            <ul class="card-list">
+                <li>CSS变量：统一管理配色、间距等样式，减少重复代码；</li>
+                <li>Flex/Grid布局：替代传统浮动布局，高效实现复杂页面排版；</li>
+                <li>响应式设计：通过媒体查询适配移动端/平板/PC，兼顾多端体验；</li>
+                <li>过渡/动画：用transition/animation实现轻量级动效，提升交互质感。</li>
+            </ul>
+
+            <h3 class="sub-title">2. 实战示例：响应式卡片+优雅动效</h3>
+            <div class="code-block">
+/* 定义CSS变量，统一管理样式 */
+:root {
+    --card-bg: #fff;
+    --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    --card-radius: 12px;
+    --primary-color: #2563eb;
+    --transition: all 0.3s ease;
+}
+
+/* 响应式卡片样式 */
+.design-card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    padding: 24px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.design-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* 响应式适配：移动端宽度100% */
+@media (max-width: 768px) {
+    .design-card {
+        max-width: 100%;
+    }
+}
+
+/* 按钮动效 */
+.card-btn {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.card-btn:hover {
+    background: #1d4ed8;
+    transform: scale(1.05);
+}
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-title">💡 设计小贴士</div>
+                <div class="tip-text">CSS动效设计遵循“轻量、实用”原则，避免过度动画导致页面卡顿；响应式设计优先采用“移动优先”思路，先适配移动端，再扩展到PC端，减少适配成本。</div>
+            </div>
+        </section>
+
+        <!-- 第三部分：JS - 前端设计的交互灵魂 -->
+        <section class="content-card">
+            <h2 class="card-title">三、JS：前端设计的交互灵魂</h2>
+            <p class="card-text">JavaScript是前端页面的“灵魂”，赋予静态页面交互能力，现代前端设计中，JS的核心是<strong>交互流畅、性能优化、用户体验优先</strong>，让页面从“能看”变成“好用”。</p>
+
+            <h3 class="sub-title">1. 前端交互设计核心场景</h3>
+            <ul class="card-list">
+                <li>事件处理：点击、hover、滚动等用户行为的响应；</li>
+                <li>DOM操作：动态修改页面内容，实现无刷新更新；</li>
+                <li>数据交互：通过AJAX/Fetch请求后端数据，渲染到页面；</li>
+                <li>性能优化：防抖/节流避免高频事件触发，提升体验。</li>
+            </ul>
+
+            <h3 class="sub-title">2. 实战示例：交互按钮+防抖搜索</h3>
+            <div class="code-block">
+// 1. 基础交互：点击按钮修改页面内容
+const demoBtn = document.querySelector('.demo-btn');
+const demoText = document.querySelector('.demo-text');
+
+demoBtn.addEventListener('click', () => {
+    demoText.textContent = '按钮点击成功！交互生效～';
+    demoText.style.color = '#2563eb';
+});
+
+// 2. 性能优化：搜索框防抖函数（避免高频触发请求）
+function debounce(fn, delay = 500) {
+    let timer = null;
+    return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn.apply(this, args);
+        }, delay);
+    };
+}
+
+// 防抖搜索示例
+const searchInput = document.querySelector('.search-input');
+const searchHandler = (e) => {
+    console.log('搜索关键词：', e.target.value);
+    // 实际场景中可在此处发起搜索请求
+};
+
+// 绑定防抖事件
+searchInput.addEventListener('input', debounce(searchHandler, 500));
+            </div>
+
+            <!-- 交互演示区 -->
+            <div class="demo-box">
+                <button class="demo-btn">点击体验交互</button>
+                <p class="demo-text">点击上方按钮，查看交互效果～</p>
+                <input type="text" class="search-input" placeholder="输入内容体验防抖（控制台查看输出）" style="margin-top:20px; padding:10px; width:300px; border:1px solid #ddd; border-radius:8px;">
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-title">💡 设计小贴士</div>
+                <div class="tip-text">JS交互设计要兼顾“反馈”和“性能”：用户操作后需给出明确提示（如按钮点击后的文字变化），同时通过防抖、节流、懒加载等手段优化性能，避免页面卡顿。</div>
+            </div>
+        </section>
+
+        <!-- 第四部分：HTML/CSS/JS 协同设计原则 -->
+        <section class="content-card">
+            <h2 class="card-title">四、HTML/CSS/JS 协同设计：从设计到落地</h2>
+            <p class="card-text">前端开发设计不是三个技术的孤立使用，而是三者的协同配合，优秀的前端设计需要遵循“<strong>结构分离、职责单一</strong>”原则：</p>
+
+            <ul class="card-list">
+                <li>HTML只负责结构和语义，不掺杂样式/交互代码；</li>
+                <li>CSS只负责视觉呈现，通过类名与HTML关联，避免行内样式；</li>
+                <li>JS只负责交互逻辑，通过选择器操作DOM，不直接修改样式（可通过切换类名实现样式变化）；</li>
+                <li>三者通过“类名/ID”建立关联，保持代码可维护性和扩展性。</li>
+            </ul>
+
+            <p class="card-text">例如：实现一个“点击切换主题”的功能，HTML定义按钮和内容容器，CSS定义“浅色/深色”两类主题样式，JS只负责点击按钮时切换容器的类名，而非直接修改CSS属性——这种模式既清晰又易维护。</p>
+        </section>
+    </main>
+
+    <!-- JS脚本 -->
+    <script>
+        // 1. 基础交互：点击按钮修改页面内容
+        const demoBtn = document.querySelector('.demo-btn');
+        const demoText = document.querySelector('.demo-text');
+
+        demoBtn.addEventListener('click', () => {
+            demoText.textContent = '按钮点击成功！交互生效～';
+            demoText.style.color = '#2563eb';
+        });
+
+        // 2. 性能优化：搜索框防抖函数
+        function debounce(fn, delay = 500) {
+            let timer = null;
+            return function(...args) {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    fn.apply(this, args);
+                }, delay);
+            };
+        }
+
+        // 防抖搜索示例
+        const searchInput = document.querySelector('.search-input');
+        const searchHandler = (e) => {
+            console.log('搜索关键词：', e.target.value);
+        };
+
+        // 绑定防抖事件
+        searchInput.addEventListener('input', debounce(searchHandler, 500));
+    </script>
+    <footer id="contact">
+    <h3 class="footer-title">邮箱：2489013285@qq.com</h3>
+     <p class="copyright"> © 2026 时海政的个人简历 | 基于博客教程创建</p>
+  
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+      <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+    </div>
+   </footer>
+</body>
+</html>

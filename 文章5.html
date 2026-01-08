@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS技巧：让网页样式更高效的实用方法</title>
+   <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="shortcut icon" href="211.png" type="image/x-icon">
+  <style>
+    /* 全局样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft Yahei", "PingFang SC", sans-serif;
+    }
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* 文章头部 */
+    .article-header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .article-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 15px;
+    }
+    .article-meta {
+      font-size: 14px;
+      color: #718096;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+    .article-intro {
+      font-size: 18px;
+      color: #4a5568;
+      max-width: 700px;
+      margin: 20px auto 0;
+    }
+
+    /* 文章内容 */
+    .article-content {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 40px;
+    }
+    .section {
+      margin-bottom: 45px;
+    }
+    .section-title {
+      font-size: 22px;
+      color: #2d3748;
+      margin-bottom: 20px;
+      padding-left: 10px;
+      border-left: 4px solid #4299e1;
+    }
+    .section-subtitle {
+      font-size: 18px;
+      color: #2d3748;
+      margin: 15px 0 10px;
+    }
+    .section-text {
+      font-size: 16px;
+      color: #4a5568;
+      margin-bottom: 20px;
+    }
+    .section-text strong {
+      color: #2d3748;
+    }
+
+    /* 代码块 */
+    .code-block {
+      background: #f7fafc;
+      border-radius: 6px;
+      padding: 18px;
+      font-family: "Consolas", monospace;
+      font-size: 14px;
+      color: #2d3748;
+      overflow-x: auto;
+      margin: 20px 0;
+      border-left: 4px solid #4299e1;
+    }
+
+    /* 技巧卡片 */
+    .tip-card {
+      background: #e8f4f8;
+      border-radius: 6px;
+      padding: 15px;
+      margin: 20px 0;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .tip-card .icon {
+      color: #4299e1;
+      font-size: 20px;
+      margin-top: 2px;
+    }
+    .tip-card .text {
+      font-size: 14px;
+      color: #4a5568;
+    }
+
+    /* 列表 */
+    .content-list {
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+    .content-list li {
+      margin-bottom: 10px;
+      color: #4a5568;
+    }
+
+    /* 页脚 */
+   footer {
+      background: #2c3e50;
+      padding: 4rem 5%;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: rgb(28, 28, 28);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .social-link {
+      font-size: 1.8rem;
+      color: rgb(7, 7, 7,0.6);
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.2);
+      color: rgb(56, 113, 235);
+      text-shadow: var(--glow);
+    }
+
+    .copyright {
+      color: rgba(7, 7, 7, 0.6);
+      font-size: 0.9rem;
+      margin-top: -20px;
+    }
+    /* 响应式适配 */
+    @media (max-width: 768px) {
+      .article-title {
+        font-size: 26px;
+      }
+      .article-content {
+        padding: 25px;
+      }
+      .section-title {
+        font-size: 20px;
+      }
+      .article-meta {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 文章头部 -->
+    <header class="article-header">
+      <h1 class="article-title">CSS技巧：让网页样式更高效的实用方法</h1>
+      <div class="article-meta">
+        <span>发布时间：2026-01-08</span>
+        <span>分类：CSS技巧 / 前端开发</span>
+        <span>阅读量：326</span>
+      </div>
+      <p class="article-intro">
+        CSS是网页样式的“化妆师”，但很多开发者只用到了它的基础功能。本文总结了8个实用CSS技巧，帮你简化代码、提升样式效果，让网页开发更高效。
+      </p>
+    </header>
+
+    <!-- 文章内容 -->
+    <main class="article-content">
+      <!-- 技巧1：利用Flex实现“自动占满剩余空间” -->
+      <section class="section">
+        <h2 class="section-title">一、Flex布局：自动占满剩余空间</h2>
+        <p class="section-text">
+          场景：需要让“按钮”固定在容器右侧，左侧内容自动占满空间（无需计算宽度）。
+        </p>
+        <div class="code-block">
+&lt;!-- HTML结构 --&gt;
+&lt;div class="card"&gt;
+  &lt;div class="card-content"&gt;这是一段内容文本&lt;/div&gt;
+  &lt;button class="card-btn"&gt;操作&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- CSS样式 --&gt;
+.card {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: #fff;
+}
+.card-content {
+  flex: 1; /* 核心：自动占满剩余空间 */
+  margin-right: 10px;
+}
+        </div>
+        <div class="tip-card">
+          <span class="icon">💡</span>
+          <div class="text">
+            <strong>技巧扩展：</strong> flex: 1 等价于 flex-grow:1; flex-shrink:1; flex-basis:0%，适用于“一侧固定、一侧自适应”的布局。
+          </div>
+        </div>
+      </section>
+
+      <!-- 技巧2：CSS变量实现“一键换肤” -->
+      <section class="section">
+        <h2 class="section-title">二、CSS变量：实现一键换肤/样式复用</h2>
+        <p class="section-text">
+          场景：页面需要支持“浅色/深色”主题切换，或复用重复的颜色、尺寸（避免多次修改）。
+        </p>
+        <div class="code-block">
+&lt;!-- 定义全局CSS变量 --&gt;
+:root {
+  --primary-color: #4299e1; /* 主色调 */
+  --font-size: 16px; /* 基础字号 */
+}
+
+/* 复用变量 */
+.button {
+  background: var(--primary-color);
+  font-size: var(--font-size);
+  padding: 8px 16px;
+}
+
+/* 切换主题（通过修改变量） */
+.dark-theme {
+  --primary-color: #2b6cb0;
+  --font-size: 15px;
+}
+        </div>
+        <p class="section-text">
+          只需给根元素（如<html>）添加.dark-theme类，即可一键切换所有依赖变量的样式，大幅减少代码冗余。
+        </p>
+      </section>
+
+      <!-- 技巧3：利用clip-path实现异形裁剪 -->
+      <section class="section">
+        <h2 class="section-title">三、clip-path：快速实现异形元素</h2>
+        <p class="section-text">
+          场景：需要将图片/容器裁剪为“三角形、多边形、圆形”等异形，无需PS处理图片。
+        </p>
+        <div class="section-subtitle">示例：裁剪为菱形图片</div>
+        <div class="code-block">
+&lt;!-- HTML --&gt;
+&lt;img src="pic.jpg" class="diamond-img"&gt;
+
+&lt;!-- CSS --&gt;
+.diamond-img {
+  width: 200px;
+  height: 200px;
+  /* 核心：通过坐标定义裁剪区域 */
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  transition: clip-path 0.3s;
+}
+.diamond-img:hover {
+  /*  hover时切换为圆形 */
+  clip-path: circle(50% at 50% 50%);
+}
+        </div>
+        <div class="tip-card">
+          <span class="icon">📌</span>
+          <div class="text">
+            可通过<a href="https://bennettfeely.com/clippy/" target="_blank" style="color:#4299e1">Clippy工具</a>可视化生成clip-path的坐标代码，无需手动计算。
+          </div>
+        </div>
+      </section>
+
+      <!-- 技巧4：::before/::after实现“额外装饰元素” -->
+      <section class="section">
+        <h2 class="section-title">四、伪元素：添加装饰元素无需额外HTML</h2>
+        <p class="section-text">
+          场景：需要给标题添加“下划线、图标”等装饰，无需在HTML中添加额外标签。
+        </p>
+        <div class="code-block">
+&lt;!-- HTML（仅标题标签） --&gt;
+&lt;h3 class="decor-title"&gt;带装饰的标题&lt;/h3&gt;
+
+&lt;!-- CSS --&gt;
+.decor-title {
+  position: relative;
+  padding-left: 20px;
+}
+/* 用::before添加左侧图标 */
+.decor-title::before {
+  content: "✨"; /* 可以是文字、图标字体 */
+  position: absolute;
+  left: 0;
+  top: 2px;
+}
+/* 用::after添加下划线 */
+.decor-title::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  bottom: -5px;
+  width: 50px;
+  height: 2px;
+  background: #4299e1;
+}
+        </div>
+        <p class="section-text">
+          伪元素的核心是content属性（不能为空），可配合position实现各种装饰效果，让HTML结构更简洁。
+        </p>
+      </section>
+
+      <!-- 技巧5：总结 -->
+      <section class="section">
+        <h2 class="section-title">五、CSS技巧的核心思路</h2>
+        <ul class="content-list">
+          <li>优先用CSS原生能力替代“额外HTML/JS”，减少代码复杂度；</li>
+          <li>利用“变量、继承、伪元素”提升样式的复用性与可维护性；</li>
+          <li>借助可视化工具（如Clippy、CSS变量生成器）降低技巧的学习成本；</li>
+          <li>技巧需结合场景使用，避免过度炫技导致兼容性问题。</li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- 页脚 -->
+     <footer id="contact">
+    <h3 class="footer-title">邮箱：2489013285@qq.com</h3>
+     <p class="copyright"> © 2026 时海政的个人简历 | 基于博客教程创建</p>
+  
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+      <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+    </div>
+   </footer>
+  </div>
+</body>
+</html>

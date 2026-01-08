@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>调整导航栏高度和位置的CSS技巧</title>
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="shortcut icon" href="211.png" type="image/x-icon">
+  <style>
+    /* 全局基础样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft Yahei", "PingFang SC", sans-serif;
+    }
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.8;
+      padding: 20px;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    /* 文章标题样式 */
+    h1 {
+      color: #2d3748;
+      font-size: 28px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    h2 {
+      color: #2d3748;
+      font-size: 22px;
+      margin: 35px 0 15px;
+      position: relative;
+      padding-left: 10px;
+    }
+    h2::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 20px;
+      background-color: #4299e1;
+    }
+    h3 {
+      color: #2d3748;
+      font-size: 18px;
+      margin: 25px 0 10px;
+    }
+
+    /* 文本样式 */
+    p {
+      color: #4a5568;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    ul {
+      padding-left: 25px;
+      margin-bottom: 20px;
+      color: #4a5568;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    strong {
+      color: #2d3748;
+    }
+
+    /* 代码块样式 */
+    .code-block {
+      background-color: #f7fafc;
+      border-radius: 6px;
+      padding: 20px;
+      font-family: "Consolas", "Monaco", monospace;
+      font-size: 14px;
+      color: #2d3748;
+      overflow-x: auto;
+      margin: 20px 0;
+      border-left: 4px solid #4299e1;
+    }
+
+    /* 演示区域样式 */
+    .demo-box {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 20px;
+      margin: 20px 0;
+      background-color: #fefefe;
+    }
+    .demo-title {
+      font-size: 16px;
+      color: #4299e1;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    /* 导航栏演示样式 */
+    .demo-nav {
+      width: 100%;
+      background-color: #4299e1;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      margin-bottom: 15px;
+    }
+    .demo-nav ul {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .demo-nav li {
+      margin: 0 10px;
+    }
+    .demo-nav a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* 注意事项样式 */
+    .note-box {
+      background-color: #fff8e1;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .note-box p {
+      margin: 0;
+      color: #795548;
+    }
+
+    /* 响应式适配 */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+    }
+    .containe {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+   footer {
+      background: #2c3e50;
+      padding: 4rem 5%;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: rgb(28, 28, 28);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .social-link {
+      font-size: 1.8rem;
+      color: rgb(7, 7, 7,0.6);
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.2);
+      color: rgb(56, 113, 235);
+      text-shadow: var(--glow);
+    }
+
+    .copyright {
+      color: rgba(7, 7, 7, 0.6);
+      font-size: 0.9rem;
+      margin-top: -20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>调整导航栏高度和位置的CSS技巧</h1>
+    
+    <p>导航栏是网页的核心交互组件，不同的设计需求需要调整其高度和位置。本文总结了调整导航栏高度、位置的核心CSS技巧，覆盖基础调整、固定定位、响应式适配等常见场景，所有代码均可直接复用。</p>
+
+    <h2>一、调整导航栏高度的核心方法</h2>
+    <p>导航栏高度调整主要有两种方式：固定高度法和内边距法，两种方式各有适用场景，需结合<code>flex</code>实现内容垂直居中。</p>
+
+    <h3>1. 固定高度法（精准控制）</h3>
+    <p>通过设置<code>height</code>属性固定导航栏高度，配合<code>display: flex + align-items: center</code>实现内容垂直居中，适合导航项固定、高度要求精准的场景。</p>
+    
+    <div class="demo-box">
+      <div class="demo-title">效果演示：60px高度导航栏</div>
+      <div class="demo-nav" style="height: 60px;">
+        <div>LOGO</div>
+        <ul>
+          <li><a href="#">首页</a></li>
+          <li><a href="#">产品</a></li>
+          <li><a href="#">关于我们</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="code-block">
+/* 固定高度导航栏 */
+.navbar-fixed-height {
+  width: 100%;
+  /* 自定义高度：PC端常用60-80px，移动端44-50px */
+  height: 60px;
+  background-color: #4299e1;
+  color: #fff;
+  /* 核心：flex布局实现内容垂直居中 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  /* 必加：防止padding撑大高度 */
+  box-sizing: border-box;
+}
+
+.navbar-fixed-height ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-fixed-height li {
+  margin: 0 10px;
+}
+
+.navbar-fixed-height a {
+  color: #fff;
+  text-decoration: none;
+}
+    </div>
+
+    <h3>2. 内边距法（灵活适配）</h3>
+    <p>不设置固定<code>height</code>，通过<code>padding</code>控制上下内边距来调整高度，内容高度自适应，适合导航项不固定的场景。</p>
+
+    <div class="demo-box">
+      <div class="demo-title">效果演示：内边距控制高度</div>
+      <div class="demo-nav" style="padding: 15px 20px; height: auto;">
+        <div>LOGO</div>
+        <ul>
+          <li><a href="#">首页</a></li>
+          <li><a href="#">产品中心</a></li>
+          <li><a href="#">关于我们</a></li>
+          <li><a href="#">联系我们</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="code-block">
+/* 内边距控制高度的导航栏 */
+.navbar-padding {
+  width: 100%;
+  background-color: #4299e1;
+  color: #fff;
+  /* 上下内边距控制高度，左右内边距控制内容间距 */
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+    </div>
+
+    <div class="note-box">
+      <p><strong>注意：</strong> 无论使用哪种方式，都需要添加<code>box-sizing: border-box</code>，防止padding和border撑大导航栏的实际宽度/高度。</p>
+    </div>
+
+    <h2>二、调整导航栏位置的核心技巧</h2>
+    <p>导航栏位置调整主要依赖<code>position</code>属性，结合<code>top/bottom/left/right</code>实现不同的定位效果，以下是最常用的3种场景。</p>
+
+    <h3>1. 固定顶部导航栏（最常用）</h3>
+    <p>通过<code>position: fixed</code>将导航栏固定在页面顶部，滚动页面时始终可见，需注意给body添加padding-top避免内容被遮挡。</p>
+
+    <div class="code-block">
+/* 固定顶部导航栏 */
+.navbar-fixed-top {
+  width: 100%;
+  height: 60px;
+  background-color: #4299e1;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  /* 核心定位属性 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* 提高层级，避免被其他元素遮挡 */
+  z-index: 999;
+}
+
+/* 关键：防止页面内容被导航栏遮挡 */
+body {
+  padding-top: 60px; /* 值等于导航栏高度 */
+}
+    </div>
+
+    <h3>2. 固定底部导航栏（移动端）</h3>
+    <p>移动端常用的底部导航栏，通过<code>bottom: 0</code>固定在页面底部，需给内容容器添加padding-bottom。</p>
+
+    <div class="code-block">
+/* 固定底部导航栏 */
+.navbar-fixed-bottom {
+  width: 100%;
+  height: 50px;
+  background-color: #4299e1;
+  color: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+}
+
+/* 防止内容被遮挡 */
+.page-content {
+  padding-bottom: 50px; /* 值等于导航栏高度 */
+}
+    </div>
+
+    <h3>3. 居中悬浮导航栏（个性化设计）</h3>
+    <p>通过<code>position: absolute</code>结合<code>transform</code>实现导航栏在容器中居中悬浮，适合个性化的页面设计。</p>
+
+    <div class="demo-box">
+      <div class="demo-title">效果演示：居中悬浮导航栏</div>
+      <div style="width: 100%; height: 200px; position: relative; border: 1px solid #e2e8f0;">
+        <div class="demo-nav" style="height: 60px; width: 80%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 8px;">
+          <div>LOGO</div>
+          <ul>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">产品</a></li>
+            <li><a href="#">关于我们</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+/* 居中悬浮导航栏 */
+.navbar-float {
+  width: 80%;
+  height: 60px;
+  background-color: #4299e1;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  /* 核心居中属性 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+    </div>
+
+    <h2>三、常见问题与避坑指南</h2>
+    <ul>
+      <li><strong>问题1：导航栏内容垂直不居中</strong> → 解决方案：使用<code>display: flex + align-items: center</code>，替代line-height（兼容性更好）；</li>
+      <li><strong>问题2：固定导航栏遮挡页面内容</strong> → 解决方案：给body或内容容器添加与导航栏高度相同的padding；</li>
+      <li><strong>问题3：移动端导航栏点击区域过小</strong> → 解决方案：导航栏高度不低于44px，符合移动端交互规范；</li>
+      <li><strong>问题4：导航栏层级被覆盖</strong> → 解决方案：设置<code>z-index</code>（建议999及以上），确保导航栏在最上层；</li>
+      <li><strong>问题5：响应式适配问题</strong> → 解决方案：通过媒体查询动态调整高度和位置，示例：
+        <br><code>@media (max-width: 768px) { .navbar { height: 50px; } }</code>
+      </li>
+    </ul>
+
+    <h2>四、总结</h2>
+    <p>调整导航栏高度和位置的核心是掌握：</p>
+    <ul>
+      <li>高度调整：固定height+flex居中 或 padding控制，配合box-sizing: border-box；</li>
+      <li>位置调整：利用position属性（fixed/absolute）实现固定顶部/底部、居中悬浮等效果；</li>
+      <li>适配优化：注意内容遮挡、层级管理、移动端交互规范等细节。</li>
+    </ul>
+    <p>以上技巧覆盖了绝大多数导航栏高度和位置调整的场景，根据实际需求选择对应的方法即可快速实现理想的导航栏布局。</p>
+  </div>
+  <footer id="contact">
+    <h3 class="footer-title">邮箱：2489013285@qq.com</h3>
+     <p class="copyright"> © 2026 时海政的个人简历 | 基于博客教程创建</p>
+  
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+      <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+    </div>
+   </footer>
+</body>
+</html>

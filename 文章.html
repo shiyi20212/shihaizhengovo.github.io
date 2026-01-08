@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人博客</title>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="shortcut icon" href="211.png" type="image/x-icon"><style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.7;
+        }
+     
+
+        /* 主内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            display: flex;
+            gap: 30px;
+            padding: 0 10px;
+        }
+        /* 文章主体 */
+        .main-content {
+            flex: 7;
+        }
+        .blog-card {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .blog-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        .blog-meta {
+            font-size: 14px;
+            color: #999;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 30px;
+        }
+        .blog-meta span {
+            margin-right: 20px;
+        }
+        .blog-meta i {
+            margin-right: 5px;
+            color: #2c84e0;
+        }
+
+        /* 文章正文 */
+        .blog-content {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 40px;
+        }
+        .blog-content h2 {
+            font-size: 24px;
+            margin: 30px 0 15px;
+            color: #2c84e0;
+            border-left: 4px solid #2c84e0;
+            padding-left: 15px;
+        }
+        .blog-content h3 {
+            font-size: 20px;
+            margin: 25px 0 10px;
+            color: #444;
+        }
+        .blog-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .blog-content img {
+            max-width: 100%;
+            border-radius: 6px;
+            margin: 20px 0;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .blog-content code {
+            background-color: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #e63946;
+            font-family: "Consolas", monospace;
+        }
+        .blog-content pre {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid #eee;
+        }
+        .blog-content pre code {
+            color: #333;
+            padding: 0;
+            background: none;
+        }
+
+        /* 文章底部 */
+        .blog-footer {
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            margin-bottom: 30px;
+        }
+        .tag-list {
+            margin-bottom: 20px;
+        }
+        .tag-list span {
+            font-size: 14px;
+            color: #666;
+            margin-right: 10px;
+        }
+        .tag {
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: #e8f4fd;
+            color: #2c84e0;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-right: 8px;
+            text-decoration: none;
+        }
+        .tag:hover {
+            background-color: #d1e7fc;
+        }
+
+        /* 侧边栏 - 关键修改：设置最小高度，适配粘性定位 */
+        .sidebar {
+            flex: 3;
+            /* 新增：让侧边栏高度跟随主内容区，保证目录粘性定位生效 */
+            align-self: flex-start;
+        }
+        .sidebar-card {
+            background-color: #fffdfd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            padding: 50px;
+            margin-bottom: 20px;
+        }
+        /* 目录容器 - 核心：粘性固定 */
+        .catalog-card {
+            /* 关键属性：粘性定位 */
+          position: fixed;
+            /* 距离顶部的距离（和导航栏高度匹配，避免被遮挡） */
+            top: 50px;
+            /* 可选：限制目录最大高度，内容过多时滚动 */
+            
+            overflow-y: auto;
+
+        }
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2c84e0;
+        }
+        /* 目录导航 */
+        .catalog {
+            list-style: none;
+        }
+        .catalog li {
+            margin-bottom: 10px;
+        }
+        .catalog a {
+            color: #666;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+        .catalog a:hover {
+            color: #2c84e0;
+            padding-left: 5px;
+        }
+      
+        /* 评论区 */
+        .comment-section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-top: 30px;
+        }
+        .comment-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .comment-form {
+            margin-bottom: 30px;
+        }
+        .comment-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            resize: none;
+            font-size: 15px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+        .comment-input:focus {
+            border-color: #2c84e0;
+        }
+        .submit-btn {
+            background-color: #2c84e0;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #1a73e8;
+        }
+        .comment-list {
+            margin-top: 30px;
+        }
+        .comment-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+        .comment-author {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        .comment-time {
+            font-size: 12px;
+            color: #999;
+            margin-left: 15px;
+        }
+        .comment-content {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 页脚 */
+       footer {
+      background: #2c3e50;
+      padding: 4rem 5%;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: rgb(28, 28, 28);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .social-link {
+      font-size: 1.8rem;
+      color: rgb(7, 7, 7,0.6);
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.2);
+      color: rgb(56, 113, 235);
+      text-shadow: var(--glow);
+    }
+
+    .copyright {
+      color: rgba(7, 7, 7, 0.6);
+      font-size: 0.9rem;
+      margin-top: -20px;
+    }
+        /* 响应式适配 */
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            .blog-title {
+                font-size: 26px;
+            }
+            .blog-card {
+                padding: 30px;
+            }
+            /* 移动端取消目录固定，恢复默认布局 */
+            .catalog-card {
+                position: static;
+                max-height: none;
+            }
+        }
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .nav-menu li {
+                margin: 0 15px;
+            }
+            .blog-card, .comment-section {
+                padding: 20px;
+            }
+            .blog-content h2 {
+                font-size: 20px;
+            }
+            .blog-content h3 {
+                font-size: 18px;
+            }
+        }
+    </style>
+    
+<body>
+    
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <!-- 文章主体 -->
+        <div class="main-content">
+            <div class="blog-card">
+                <h1 class="blog-title">HTML实现个人博客网页的完整教程</h1>
+                <div class="blog-meta">
+                    <span><i class="fa fa-calendar"></i> 发布时间: 2026-01-07</span>
+                    <span><i class="fa fa-folder-o"></i> 分类: 前端开发</span>
+                    <span><i class="fa fa-eye"></i> 阅读量: 128</span>
+                    <span><i class="fa fa-comment-o"></i> 评论数: 8</span>
+                </div>
+
+                <div class="blog-content">
+                    <p>在互联网时代，拥有一个属于自己的个人博客是展示技术、记录成长的绝佳方式。本文将从零开始，教你用纯HTML+CSS制作一个美观、实用、响应式的个人博客网页，即使是编程新手也能轻松掌握。</p>
+                    
+                    <h2 id="section1">1. 博客页面结构规划</h2>
+                    <p>一个完整的博客网页通常包含以下核心模块：</p>
+                    <ul style="margin-left: 30px; margin-bottom: 20px;">
+                        <li>顶部导航栏：包含logo、导航菜单</li>
+                        <li>横幅区域（Banner）：展示博客主题或轮播图</li>
+                        <li>文章列表区：展示博客文章卡片</li>
+                        <li>侧边栏：包含目录、推荐、分类等</li>
+                        <li>文章详情区：展示完整文章内容</li>
+                        <li>评论区：允许读者留言互动</li>
+                        <li>页脚：版权信息、联系方式等</li>
+                    </ul>
+
+                    <h2 id="section2">2. 基础HTML结构搭建</h2>
+                    <p>首先，我们创建博客的基础HTML骨架，遵循语义化原则，使用合适的标签来组织内容：</p>
+                    <pre>
+<code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;我的个人博客&lt;/title&gt;
+    &lt;!-- 引入CSS样式 --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- 导航栏 --&gt;
+    &lt;header class="header"&gt;&lt;/header&gt;
+    
+    &lt;!-- 主内容区 --&gt;
+    &lt;div class="container"&gt;&lt;/div&gt;
+    
+    &lt;!-- 页脚 --&gt;
+    &lt;footer class="footer"&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code>
+                    </pre>
+
+                    <h2 id="section3">3. 样式美化与响应式适配</h2>
+                    <p>使用CSS对页面进行美化，重点关注以下几点：</p>
+                    <p>1. 颜色搭配：选择主色调（如本文的蓝色#2c84e0），搭配中性色（白、灰），保持视觉统一</p>
+                    <p>2. 布局设计：使用Flex布局实现灵活的页面排版，适配不同屏幕尺寸</p>
+                    <p>3. 交互效果：添加hover效果、阴影、过渡动画，提升用户体验</p>
+                    <p>4. 响应式适配：通过媒体查询（@media）为手机、平板、电脑设置不同的样式</p>
+
+                    <h2 id="section4">4. 核心功能实现</h2>
+                    <h3>4.1 文章卡片制作</h3>
+                    <p>文章卡片是博客列表的核心元素，需要包含标题、摘要、发布时间、阅读量等信息，示例代码如下：</p>
+                    <pre>
+<code>&lt;div class="article-card"&gt;
+    &lt;h3 class="article-title"&gt;&lt;a href="#"&gt;文章标题&lt;/a&gt;&lt;/h3&gt;
+    &lt;p class="article-summary"&gt;文章摘要内容...&lt;/p&gt;
+    &lt;div class="article-meta"&gt;
+        &lt;span&gt;2026-01-07&lt;/span&gt;
+        &lt;span&gt;阅读量: 128&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code>
+                    </pre>
+
+                    <h3>4.2 目录导航实现</h3>
+                    <p>通过锚点链接实现目录跳转功能，点击目录项可以快速跳转到对应章节：</p>
+                    <pre>
+<code>&lt;ul class="catalog"&gt;
+    &lt;li&gt;&lt;a href="#section1"&gt;1. 博客页面结构规划&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#section2"&gt;2. 基础HTML结构搭建&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code>
+                    </pre>
+
+                    <h2 id="section5">5. 优化与上线</h2>
+                    <p>完成开发后，还需要进行以下优化：</p>
+                    <p>1. 代码压缩：压缩HTML、CSS代码，提升加载速度</p>
+                    <p>2. 图片优化：压缩图片大小，使用WebP格式</p>
+                    <p>3. 兼容性测试：在不同浏览器、不同设备上测试页面显示效果</p>
+                    <p>4. 部署上线：将代码上传到服务器或静态托管平台（如GitHub Pages、Netlify）</p>
+                </div>
+
+                <div class="blog-footer">
+                    <div class="tag-list">
+                        <span>文章标签：</span>
+                        <a href="#" class="tag">HTML</a>
+                        <a href="#" class="tag">CSS</a>
+                        <a href="#" class="tag">个人博客</a>
+                        <a href="#" class="tag">前端开发</a>
+                        <a href="#" class="tag">响应式设计</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 评论区 -->
+            <div class="comment-section">
+                <h3 class="comment-title">评论区</h3>
+                <div class="comment-form">
+                    <textarea class="comment-input" rows="5" placeholder="请输入你的评论..."></textarea>
+                    <button class="submit-btn">提交评论</button>
+                </div>
+                <div class="comment-list">
+                    <div class="comment-item">
+                        <div class="comment-author">
+                            张三 <span class="comment-time">2026-01-07 10:20</span>
+                        </div>
+                        <div class="comment-content">
+                            写得非常详细，新手表示受益匪浅！已经跟着教程做出了自己的第一个博客页面，感谢分享～
+                        </div>
+                    </div>
+                    <div class="comment-item">
+                        <div class="comment-author">
+                            李四 <span class="comment-time">2026-01-07 11:35</span>
+                        </div>
+                        <div class="comment-content">
+                            请问响应式适配部分，除了媒体查询还有其他更好的方法吗？比如使用CSS Grid？
+                        </div>
+                    </div>
+                    <div class="comment-item">
+                        <div class="comment-author">
+                            博主 <span class="comment-time">2026-01-07 12:10</span>
+                        </div>
+                        <div class="comment-content">
+                            @李四 当然可以！CSS Grid在复杂布局上更有优势，后续我会出一篇专门讲解Grid布局的文章，敬请关注～
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <!-- 目录导航 - 新增 catalog-card 类实现固定 -->
+            <div class="sidebar-card catalog-card">
+                <h3 class="sidebar-title">文章目录</h3>
+                <ul class="catalog">
+                    <li><a href="#section1">1. 博客页面结构规划</a></li>
+                    <li><a href="#section2">2. 基础HTML结构搭建</a></li>
+                    <li><a href="#section3">3. 样式美化与响应式适配</a></li>
+                    <li><a href="#section4">4. 核心功能实现</a></li>
+                    <li><a href="#section5">5. 优化与上线</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+    <h3 class="footer-title">邮箱：2489013285@qq.com</h3>
+     <p class="copyright"> © 2026 时海政的个人简历 | 基于博客教程创建</p>
+  
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+      <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+    </div>
+   </footer>
+</body>
+</html>

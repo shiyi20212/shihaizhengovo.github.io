@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能问卷</title>
+    <link rel="shortcut icon" href="211.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            padding: 20px;
+        }
+        .form-item {
+            margin-bottom: 25px;
+        }
+        .form-item label.title {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .input-text {
+            width: 350px;
+            height: 32px;
+            padding: 0 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .radio-group input {
+            margin-right: 5px;
+        }
+        .textarea {
+            width: 400px;
+            height: 120px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        .select-area {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .select-area select {
+            padding: 6px;
+            width: 220px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn-group {
+            margin-top: 15px;
+        }
+        .btn-submit {
+            background-color: #409EFF;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-cancel {
+            background-color: #F56C6C;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <!-- 姓名输入 -->
+        <div class="form-item">
+            <label class="title">1 姓名</label>
+            <input type="text" class="input-text" placeholder="请输入您的姓名">
+        </div>
+
+        <!-- 年龄区间 -->
+        <div class="form-item">
+            <label class="title">2 您的年龄区间是？</label>
+            <div class="radio-group">
+                <label><input type="radio" name="age" checked> 19岁以下</label>
+                <label><input type="radio" name="age"> 20-29岁</label>
+                <label><input type="radio" name="age"> 30-39岁</label>
+                <label><input type="radio" name="age"> 40岁以上</label>
+            </div>
+        </div>
+
+        <!-- 了解渠道 -->
+        <div class="form-item">
+            <label class="title">3 您通过什么渠道了解人工智能技术？</label>
+            <div class="radio-group">
+                <label><input type="radio" name="channel" checked> 网络新闻</label>
+                <label><input type="radio" name="channel"> 商场宣传</label>
+                <label><input type="radio" name="channel"> 朋友推荐</label>
+                <label><input type="radio" name="channel"> 自身喜好</label>
+            </div>
+        </div>
+
+        <!-- 问题与建议 -->
+        <div class="form-item">
+            <label class="title">4 您对人工智能技术有什么问题和建议？</label>
+            <textarea class="textarea" placeholder="请在此输入您的问题和建议"></textarea>
+        </div>
+
+        <!-- 分类与重要程度 -->
+        <div class="form-item">
+            <label class="title">请选择问题分类和重要程度</label>
+            <div class="select-area">
+                <select>
+                    <option selected>技术方案</option>
+                    <option>产品体验</option>
+                    <option>其他</option>
+                </select>
+                <span>一般问题</span>
+            </div>
+        </div>
+
+        <!-- 提交按钮 -->
+        <div class="btn-group">
+            <button type="submit" class="btn-submit">提交</button>
+            <button type="button" class="btn-cancel">取消</button>
+        </div>
+    </form>
+</body>
+</html>

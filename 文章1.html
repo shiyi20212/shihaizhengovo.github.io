@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML实现个人博客网页的完整教程</title>
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <link rel="shortcut icon" href="211.png" type="image/x-icon">
+ <style>
+    /* 全局样式：简洁科普风 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
+    }
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* 文章头部区域 */
+    .article-header {
+      margin-bottom: 30px;
+    }
+    .article-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #2d3748;
+      margin-bottom: 20px;
+    }
+    .article-meta {
+      font-size: 14px;
+      color: #718096;
+      display: flex;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+    .article-excerpt {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #4a5568;
+      margin-bottom: 30px;
+    }
+    .read-more-btn {
+      display: inline-block;
+      padding: 10px 24px;
+      background-color: #3182ce;
+      color: #fff;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    .read-more-btn:hover {
+      background-color: #2b6cb0;
+    }
+
+    /* 科普内容区域 */
+    .article-content {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 30px;
+      display: none; /* 默认隐藏，点击按钮显示 */
+    }
+    .content-section {
+      margin-bottom: 40px;
+    }
+    .section-title {
+      font-size: 22px;
+      color: #2d3748;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .section-text {
+      font-size: 16px;
+      line-height: 2;
+      color: #4a5568;
+      margin-bottom: 20px;
+    }
+    /* 代码块样式 */
+    .code-box {
+      background-color: #f7fafc;
+      border-radius: 4px;
+      padding: 16px;
+      font-family: "Consolas", monospace;
+      font-size: 14px;
+      color: #2d3748;
+      overflow-x: auto;
+      margin: 15px 0;
+      border-left: 4px solid #3182ce;
+    }
+
+    /* 页脚 */
+     footer {
+      background: #eef0f1;
+      padding: 4rem 5%;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: rgb(76, 74, 74);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .social-link {
+      font-size: 1.8rem;
+      color: rgb(7, 7, 7,0.6);
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.2);
+      color: rgb(56, 113, 235);
+      text-shadow: var(--glow);
+    }
+
+    .copyright {
+      color: rgba(7, 7, 7, 0.6);
+      font-size: 0.9rem;
+      margin-top: -20px;
+    }
+
+    /* 响应式适配 */
+    @media (max-width: 768px) {
+      .article-title {
+        font-size: 26px;
+      }
+      .article-content {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 文章头部 -->
+    <div class="article-header">
+      <h1 class="article-title">HTML实现个人博客网页的完整教程</h1>
+      <div class="article-meta">
+        <span>发布时间：2026-01-07</span>
+        <span>分类：前端开发</span>
+        <span>阅读量：128</span>
+      </div>
+      <p class="article-excerpt">
+        本文详细讲解了如何用HTML+CSS制作一份完整的个人博客网页，包含导航栏、Banner、博客列表、侧边栏、页脚等核心模块，兼顾响应式适配，新手也能轻松上手...
+      </p>
+      <button class="read-more-btn" id="toggleContent">阅读全文</button>
+    </div>
+
+    <!-- 科普内容（默认隐藏） -->
+    <div class="article-content" id="contentArea">
+      <!-- 模块1：什么是HTML+CSS？ -->
+      <div class="content-section">
+        <h2 class="section-title">一、HTML与CSS：网页的“骨架”与“外衣”</h2>
+        <p class="section-text">
+          HTML（超文本标记语言）是网页的“骨架”，负责定义网页的结构（比如标题、段落、按钮）；CSS（层叠样式表）是网页的“外衣”，负责控制网页的外观（比如颜色、布局、大小）。
+          要制作博客网页，需要用HTML搭建结构，再用CSS美化样式。
+        </p>
+      </div>
+
+      <!-- 模块2：导航栏的实现 -->
+      <div class="content-section">
+        <h2 class="section-title">二、核心模块1：导航栏（网页的“指引牌”）</h2>
+        <p class="section-text">
+          导航栏是博客的“指引牌”，通常包含“首页、博客、关于我”等选项，需要固定在页面顶部方便用户点击。
+          用HTML定义导航结构，CSS实现固定定位和样式：
+        </p>
+        <div class="code-box">
+&lt;!-- 导航栏HTML结构 --&gt;
+&lt;nav class="nav-bar"&gt;
+  &lt;div class="logo"&gt;我的博客&lt;/div&gt;
+  &lt;ul class="nav-links"&gt;
+    &lt;li&gt;&lt;a href="#"&gt;首页&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;博客&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;关于我&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+
+&lt;!-- 导航栏CSS样式 --&gt;
+.nav-bar {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: sticky; /* 固定在顶部 */
+  top: 0;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+        </div>
+      </div>
+
+      <!-- 模块3：Banner区域的实现 -->
+      <div class="content-section">
+        <h2 class="section-title">三、核心模块2：Banner（博客的“门面”）</h2>
+        <p class="section-text">
+          Banner是博客的“门面”，通常展示博客标题和简介，用背景图+文字的组合提升视觉效果：
+        </p>
+        <div class="code-box">
+&lt;!-- Banner HTML结构 --&gt;
+&lt;section class="banner"&gt;
+  &lt;div class="banner-text"&gt;
+    &lt;h1&gt;我的个人博客&lt;/h1&gt;
+    &lt;p&gt;记录成长，分享所学&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- Banner CSS样式 --&gt;
+.banner {
+  height: 400px;
+  background: url("banner.jpg") center/cover; /* 背景图 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+}
+        </div>
+      </div>
+
+      <!-- 模块4：响应式适配 -->
+      <div class="content-section">
+        <h2 class="section-title">四、让博客适配手机：响应式布局</h2>
+        <p class="section-text">
+          为了让博客在手机上也能正常显示，需要用CSS的“媒体查询”功能，在小屏幕设备上自动调整布局（比如把导航栏改成“汉堡菜单”）：
+        </p>
+        <div class="code-box">
+&lt;!-- 响应式CSS --&gt;
+@media (max-width: 768px) {
+  /* 手机端隐藏导航列表，显示汉堡按钮 */
+  .nav-links { display: none; }
+  .hamburger { display: block; }
+  /* 缩小Banner高度 */
+  .banner { height: 280px; }
+}
+        </div>
+      </div>
+
+      <p class="section-text">
+        通过以上步骤，就能完成一个包含“导航栏、Banner、博客列表”的完整博客网页啦！HTML负责搭结构，CSS负责美化和适配，新手也能快速上手~
+      </p>
+    </div>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+    <h3 class="footer-title">邮箱：2489013285@qq.com</h3>
+     <p class="copyright"> © 2026 时海政的个人简历 | 基于博客教程创建</p>
+  
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+      <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+    </div>
+   </footer>
+  </div>
+
+  <!-- 点击“阅读全文”显示内容的JS -->
+  <script>
+    const toggleBtn = document.getElementById('toggleContent');
+    const contentArea = document.getElementById('contentArea');
+    
+    toggleBtn.addEventListener('click', () => {
+      if (contentArea.style.display === 'none' || contentArea.style.display === '') {
+        contentArea.style.display = 'block';
+        toggleBtn.textContent = '收起全文';
+      } else {
+        contentArea.style.display = 'none';
+        toggleBtn.textContent = '阅读全文';
+      }
+    });
+  </script>
+</body>
+</html>

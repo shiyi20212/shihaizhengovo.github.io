@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人博客</title>
+    <link rel="shortcut icon" href="211.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+       
+         .header {
+    background-color: white;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    animation: slideDown 0.5s ease-out;
+    box-shadow: 0px 2px 0px rgb(161, 156, 156);
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    height: 65px;
+}
+
+.logo {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+             
+
+.logo a {
+    text-decoration: none;
+}
+.logo img {
+    width: 100px;
+            margin-right: 80px;
+            border-radius: 50%;
+}
+.logo-text {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-left: -80px;
+            
+            
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark-color);
+    font-weight: 600;
+    transition: var(--transition);
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: var(--accent-color);
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+/* 导航栏容器 */
+        .navbar {
+           background: linear-gradient(90deg,#1a2b4c,#2d4068);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+           
+            
+        }
+
+       
+        
+       
+       
+
+        /* 桌面端菜单 */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #FF0000;
+        }
+
+        /* 汉堡按钮样式 */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: rgb(171, 150, 150);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        /* 响应式：移动端隐藏菜单，显示汉堡按钮 */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 250px;
+                background-color: #41546f;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in;
+                z-index: 999;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+            /* 博客布局改为纵向 */
+      .blog-main {
+        flex-direction: column;
+      }
+      /* 调整banner尺寸 */
+      .banner {
+        height: 280px;
+      }
+      .banner h1 {
+        font-size: 32px;
+      }
+      .banner p {
+        font-size: 16px;
+      }
+
+            /* 菜单展开状态 */
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            /* 汉堡按钮动画：变成叉号 */
+            .hamburger.active div:nth-child(1) {
+                transform: rotate(45deg) translateY(8px);
+            }
+
+            .hamburger.active div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active div:nth-child(3) {
+                transform: rotate(-45deg) translateY(-8px);
+            }
+        }
+         .app:not(:first-child):not(:first-child) a::after{
+        /* 设置内容为空 */
+        content: "";
+        width: 0;
+        height: 3px;
+        /* 设置背景颜色 */
+        background-color: red;
+        /* 子元素设置绝对定位 */
+        position:absolute;
+        left: 0;
+        bottom: 0;
+        /* 设置过度效果 */
+        transition: width 0.3s linear;
+    }
+    .app:not(:first-child) a:hover{
+        color: red;
+    }
+    .app:not(:first-child) a:hover::after{
+        width: 100%;
+        
+    }
+    .app:nth-child(2) a {
+        color: red;
+        border-bottom: 3px solid red;
+    }
+    /* 首页Banner样式 */
+    .banner {
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+    }
+    .banner h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    .banner p {
+      font-size: 18px;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* 博客主体内容布局 */
+    .blog-main {
+      padding: 40px 0;
+      display: flex;
+      gap: 30px;
+    }
+    /* 博客列表 */
+    .blog-list {
+      flex: 3;
+    }
+    .blog-item {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 25px;
+      margin-bottom: 30px;
+      transition: transform 0.3s;
+    }
+    .blog-item:hover {
+      transform: translateY(-5px);
+    }
+    .blog-title {
+      font-size: 24px;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+    .blog-title a:hover {
+      color: #3498db;
+    }
+    .blog-meta {
+      display: flex;
+      gap: 20px;
+      color: #999;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+    .blog-excerpt {
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .read-more {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #3498db;
+      color: #fff;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    .read-more:hover {
+      background-color: #2980b9;
+    }
+
+    /* 侧边栏 */
+    .sidebar {
+      flex: 1;
+    }
+    .sidebar-card {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    .sidebar-title {
+      font-size: 18px;
+      color: #2c3e50;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #eee;
+      margin-bottom: 20px;
+    }
+    /* 个人信息 */
+    .author-info {
+      text-align: center;
+    }
+    .author-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      object-fit: cover;
+    }
+    .author-name {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .author-desc {
+      color: #666;
+      line-height: 1.6;
+    }
+    /* 分类/热门文章 */
+    .category-list li, .hot-article li {
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+      
+    }
+    .category-list a, .hot-article a {
+      color: #666;
+      transition: color 0.3s;
+
+    }
+    .category-list a:hover, .hot-article a:hover {
+      color: #3498db;
+      padding-left: 5px;
+    }
+    a {
+      text-decoration: none;
+      color: #333;
+    }
+    li {
+      list-style: none;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+       /* 视频父容器：控制背景范围（这里设为全屏） */
+.video-bg-container {
+  position: relative; /* 让视频的绝对定位相对于自己 */
+  width: 100%;
+  min-height: 100vh; /* 占满整个视口高度 */
+  overflow: hidden; /* 隐藏视频超出容器的部分 */
+}
+
+/* 背景视频：铺满容器、置于下层 */
+.video-bg {
+  position: absolute; /* 脱离文档流，作为背景 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 85%;
+  object-fit: cover; /* 保持视频比例，填满容器（自动裁剪边缘） */
+  z-index: -1; /* 层级设为负数，让内容叠在上面 */
+}
+
+/* 页面内容：确保在视频上方，可自定义样式 */
+.content {
+  position: relative; /* 确保层级高于视频 */
+  padding: 50px;
+  color: #fff; /* 文字设为白色，避免和视频混在一起 */
+  text-align: center;
+} 
+footer {
+      background: #2c3e50;
+      padding: 4rem 5%;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: rgb(28, 28, 28);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .social-link {
+      font-size: 1.8rem;
+      color: rgb(7, 7, 7,0.6);
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.2);
+      color: rgb(56, 113, 235);
+      text-shadow: var(--glow);
+    }
+
+    .copyright {
+      color: rgba(7, 7, 7, 0.6);
+      font-size: 0.9rem;
+      margin-top: -20px;
+    }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <nav class="navbar">
+        <div class="logo">
+            <a href="index.html" class="text">
+                <img src="211.png" alt="">
+            </a>
+        <a href="index.html" class="logo-text">博客主页</a></div>
+        <ul class="nav-links">
+            <li class="app"><a href="index.html">首页</a></li>
+            <li class="app"><a href="博客.html">博客</a></li>
+            <li class="app"><a href="作品集.html">作品集</a></li>
+            <li class="app"><a href="关于我.html">关于我</a></li>
+            <li class="app"><a href="文章示例.html">文章示例</a></li>
+        </ul>
+        <div class="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </nav>
+    </div>
+    <script>
+        // 获取元素
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        // 点击汉堡按钮切换菜单状态
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // 点击菜单链接关闭菜单
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+    </script>
+    
+    </div>
+      <!-- 背景视频的父容器：控制视频的范围（比如全屏背景） -->
+<div class="video-bg-container">
+  <!-- 背景视频 -->
+  <video class="video-bg" autoplay muted loop playsinline poster="封面图.jpg">
+    <!-- 提供不同格式的视频，兼容更多浏览器 -->
+    <source src="204.mp4" type="video/mp4">
+    
+  </video>
+
+  <!-- 页面内容：叠在视频上方 -->
+  <div class="content">
+    <!-- 首页Banner -->
+  <section class="banner" id="home">
+    <div class="container">
+      <h1>记录成长，分享所学</h1>
+      <p>专注于前端开发、个人成长与生活感悟，用文字记录每一步的进步</p>
+    </div>
+  </section>
+  </div>
+</div>
+   
+  <!-- 博客主体内容 -->
+  <section class="container blog-main" id="blog">
+    <!-- 博客列表 -->
+    <div class="blog-list">
+      <!-- 博客文章1 -->
+      <div class="blog-item">
+        <h2 class="blog-title"><a href="文章1.html">HTML实现个人博客网页的完整教程</a></h2>
+        <div class="blog-meta">
+          <span>发布时间：2026-01-07</span>
+          <span>分类：前端开发</span>
+          <span>阅读量：128</span>
+        </div>
+        <p class="blog-excerpt">本文详细讲解了如何用HTML+CSS制作一份完整的个人博客网页，包含导航栏、Banner、博客列表、侧边栏、页脚等核心模块，兼顾响应式适配，新手也能轻松上手...</p>
+        <a href="文章1.html" class="read-more">阅读全文</a>
+      </div>
+      <!-- 博客文章2 -->
+      <div class="blog-item">
+        <h2 class="blog-title"><a href="文章2.html">CSS背景图片完全显示的几种方法</a></h2>
+        <div class="blog-meta">
+          <span>发布时间：2026-01-06</span>
+          <span>分类：CSS技巧</span>
+          <span>阅读量：96</span>
+        </div>
+        <p class="blog-excerpt">在网页开发中，背景图片经常需要完整显示且不拉伸变形，本文总结了contain、cover等属性的用法，以及不同场景下的适配方案，解决背景图片裁剪、拉伸的问题...</p>
+        <a href="文章2.html" class="read-more">阅读全文</a>
+      </div>
+      <!-- 博客文章3 -->
+      <div class="blog-item">
+        <h2 class="blog-title"><a href="文章3.html">移动端汉堡菜单的实现思路</a></h2>
+        <div class="blog-meta">
+          <span>发布时间：2026-01-05</span>
+          <span>分类：前端交互</span>
+          <span>阅读量：156</span>
+        </div>
+        <p class="blog-excerpt">汉堡菜单是移动端导航的常用组件，本文结合HTML+CSS+JS实现了点击切换的汉堡菜单，包含滑入动画、大屏适配等细节，提升移动端用户体验...</p>
+        <a href="文章3.html" class="read-more">阅读全文</a>
+      </div>
+
+      <div class="blog-item">
+        <h2 class="blog-title"><a href="文章3.html">程序员的高效学习方法分享</a></h2>
+        <div class="blog-meta">
+          <span>发布时间：2026-01-02</span>
+          <span>分类：学习方法</span>
+          <span>阅读量：256</span>
+        </div>
+        <p class="blog-excerpt">作为程序员，持续学习是必备能力。本文总结了我多年来的学习经验，包括如何选择学习资源、如何制定学习计划、如何将知识转化为实践等内容...</p>
+        <a href="文章0.html" class="read-more">阅读全文</a>
+      </div>
+    </div>
+    
+
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+      <!-- 个人信息卡片 -->
+      <div class="sidebar-card author-info">
+       <a href="关于我.html"> <h3 class="sidebar-title">关于博主</h3>
+        <img src="202.jpg" alt="头像" class="author-avatar"></a>
+        <h4 class="author-name">时海政</h4>
+        <p class="author-desc">前端开发爱好者，专注分享HTML/CSS/JS实用技巧，喜欢用代码打造好看又好用的网页~</p>
+      </div>
+
+      <!-- 分类卡片 -->
+      <div class="sidebar-card">
+        <h3 class="sidebar-title">文章分类</h3>
+        <ul class="category-list">
+          <li><a href="文章4.html">前端开发</a></li>
+          <li><a href="文章5.html">CSS技巧</a></li>
+          <li><a href="文章6.html">JS交互</a></li>
+          <li><a href="文章7.html">个人成长</a></li>
+        </ul>
+      </div>
+
+      <!-- 热门文章 -->
+      <div class="sidebar-card">
+        <h3 class="sidebar-title">热门文章</h3>
+        <ul class="hot-article">
+          <li><a href="文章8.html">HTML实现视频背景的完整代码</a></li>
+          <li><a href="文章9.html">调整导航栏高度和位置的CSS技巧</a></li>
+          <li><a href="文章10.html">博客页面轮播图的实现方法</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+ <footer id="contact">
+    <h3 class="footer-title">邮箱：2489013285@qq.com</h3>
+     <p class="copyright"> © 2026 时海政的个人简历 | 基于博客教程创建</p>
+  
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+      <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+    </div>
+   </footer>
+</body>
+</html>

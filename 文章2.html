@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS背景图片完全显示的几种方法</title>
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="shortcut icon" href="211.png" type="image/x-icon">
+  <style>
+    /* 全局样式：简洁科普风 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
+    }
+    body {
+      background-color: #f5f7fa;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 50px 20px;
+    }
+
+    /* 文章头部区域 */
+    .article-header {
+      margin-bottom: 30px;
+    }
+    .article-title {
+      font-size: 28px;
+      font-weight: bold;
+      color: #2d3748;
+      margin-bottom: 20px;
+    }
+    .article-meta {
+      font-size: 14px;
+      color: #718096;
+      display: flex;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+    .article-excerpt {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #4a5568;
+      margin-bottom: 30px;
+    }
+    .read-more-btn {
+      display: inline-block;
+      padding: 10px 24px;
+      background-color: #2b6cb0;
+      color: #fff;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    .read-more-btn:hover {
+      background-color: #2c5282;
+    }
+
+    /* 科普内容区域（默认隐藏） */
+    .article-content {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 30px;
+      display: none;
+      margin-bottom: 40px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section-title {
+      font-size: 22px;
+      color: #2d3748;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .section-text {
+      font-size: 16px;
+      line-height: 2;
+      color: #4a5568;
+      margin-bottom: 20px;
+    }
+    /* 代码示例样式 */
+    .code-block {
+      background-color: #f7fafc;
+      border-radius: 4px;
+      padding: 16px;
+      font-family: "Consolas", monospace;
+      font-size: 14px;
+      color: #2d3748;
+      overflow-x: auto;
+      margin: 15px 0;
+      border-left: 4px solid #2b6cb0;
+    }
+    /* 对比表格 */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .compare-table th, .compare-table td {
+      border: 1px solid #e2e8f0;
+      padding: 12px;
+      text-align: left;
+    }
+    .compare-table th {
+      background-color: #f7fafc;
+      font-weight: bold;
+    }
+
+    /* 页脚 */
+    footer {
+      background: #eef0f1;
+      padding: 4rem 5%;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: rgb(76, 74, 74);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .social-link {
+      font-size: 1.8rem;
+      color: rgb(7, 7, 7,0.6);
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.2);
+      color: rgb(56, 113, 235);
+      text-shadow: var(--glow);
+    }
+
+    .copyright {
+      color: rgba(7, 7, 7, 0.6);
+      font-size: 0.9rem;
+      margin-top: -20px;
+    }
+
+    /* 响应式适配 */
+    @media (max-width: 768px) {
+      .article-title {
+        font-size: 24px;
+      }
+      .article-content {
+        padding: 20px;
+      }
+      .compare-table th, .compare-table td {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 文章头部 -->
+    <div class="article-header">
+      <h1 class="article-title">CSS背景图片完全显示的几种方法</h1>
+      <div class="article-meta">
+        <span>发布时间：2026-01-06</span>
+        <span>分类：CSS技巧</span>
+        <span>阅读量：96</span>
+      </div>
+      <p class="article-excerpt">
+        在网页开发中，背景图片经常需要完整显示且不拉伸变形，本文总结了contain、cover等属性的用法，以及不同场景下的适配方案，解决背景图片裁剪、拉伸的问题...
+      </p>
+      <button class="read-more-btn" id="toggleBtn">阅读全文</button>
+    </div>
+
+    <!-- 科普内容区域 -->
+    <div class="article-content" id="contentArea">
+      <!-- 模块1：为什么背景图会“显示不全”？ -->
+      <div class="section">
+        <h2 class="section-title">一、背景图显示不全的原因</h2>
+        <p class="section-text">
+          网页中背景图默认会“平铺”（重复显示），且不会自动适配容器尺寸——如果图片宽高比和容器不一致，要么被裁剪，要么被拉伸变形。
+          解决这个问题，核心是用CSS的<code>background-size</code>属性控制图片的显示方式。
+        </p>
+      </div>
+
+      <!-- 模块2：核心方法1：background-size: contain -->
+      <div class="section">
+        <h2 class="section-title">二、方法1：contain（完整显示，留空白）</h2>
+        <p class="section-text">
+          <code>contain</code>会让背景图“等比例缩放”，直到图片的宽度/高度贴合容器边界，<strong>保证图片完整显示</strong>，但容器可能出现空白区域（因为图片比例和容器不一致）。
+        </p>
+        <div class="code-block">
+/* HTML：给容器加类名 */
+&lt;div class="bg-box contain"&gt;&lt;/div&gt;
+
+/* CSS样式 */
+.bg-box {
+  width: 500px;
+  height: 300px;
+  background-image: url("bg.jpg");
+  background-repeat: no-repeat; /* 禁止平铺 */
+  background-position: center; /* 图片居中 */
+}
+.contain {
+  background-size: contain; /* 完整显示图片 */
+}
+        </div>
+        <p class="section-text">适用场景：需要完整展示图片内容（比如logo、海报），允许容器留空白。</p>
+      </div>
+
+      <!-- 模块3：核心方法2：background-size: cover -->
+      <div class="section">
+        <h2 class="section-title">三、方法2：cover（填满容器，裁边缘）</h2>
+        <p class="section-text">
+          <code>cover</code>会让背景图“等比例缩放”，直到图片填满整个容器，<strong>没有空白区域</strong>，但图片超出容器的部分会被裁剪。
+        </p>
+        <div class="code-block">
+/* CSS样式 */
+.cover {
+  background-size: cover; /* 填满容器，裁剪边缘 */
+}
+        </div>
+        <p class="section-text">适用场景：背景图是装饰性图片（比如banner图），不需要完整显示细节，优先填满容器。</p>
+      </div>
+
+      <!-- 模块4：方法对比与场景选择 -->
+      <div class="section">
+        <h2 class="section-title">四、方法对比与场景选择</h2>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>属性值</th>
+              <th>效果</th>
+              <th>适用场景</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>contain</td>
+              <td>图片完整显示，容器可能留空白</td>
+              <td>需要展示完整图片内容（如logo、信息图）</td>
+            </tr>
+            <tr>
+              <td>cover</td>
+              <td>填满容器，图片可能被裁剪</td>
+              <td>装饰性背景图（如banner、卡片背景）</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="section-text">
+          实际开发中，还可以结合<code>background-position</code>调整裁剪区域（比如<code>background-position: top</code>让图片顶部对齐，裁剪底部），让背景图显示更符合需求。
+        </p>
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+    <h3 class="footer-title">邮箱：2489013285@qq.com</h3>
+     <p class="copyright"> © 2026 时海政的个人简历 | 基于博客教程创建</p>
+  
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+      <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+    </div>
+   </footer>
+  </div>
+
+  <!-- 阅读全文交互JS -->
+  <script>
+    const toggleBtn = document.getElementById('toggleBtn');
+    const contentArea = document.getElementById('contentArea');
+    
+    toggleBtn.addEventListener('click', () => {
+      if (contentArea.style.display === 'none' || contentArea.style.display === '') {
+        contentArea.style.display = 'block';
+        toggleBtn.textContent = '收起全文';
+      } else {
+        contentArea.style.display = 'none';
+        toggleBtn.textContent = '阅读全文';
+      }
+    });
+  </script>
+</body>
+</html>

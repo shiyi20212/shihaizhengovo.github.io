@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人博客</title>
+    <link rel="shortcut icon" href="211.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+       .header {
+       
+    background-color: white;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    animation: slideDown 0.5s ease-out;
+    box-shadow: 0px 2px 0px rgb(161, 156, 156);
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    height: 65px;
+}
+
+.logo {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+             
+
+.logo a {
+    text-decoration: none;
+}
+.logo img {
+    width: 100px;
+            margin-right: 80px;
+            border-radius: 50%;
+}
+.logo-text {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-left: -80px;
+            
+            
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark-color);
+    font-weight: 600;
+    transition: var(--transition);
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: var(--accent-color);
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.hamburger-btn {
+            display: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+.hero {
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+    height: 380px;
+   margin-top: -20px;
+}
+
+
+
+.hero-content {
+    top: 10px;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    font-family: var(--heading-font);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    animation: fadeInUp 0.8s ease-out;
+    color: #d9d919;
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.hero-text p {
+    font-size: 1.2rem;
+    color: var(--gray-color);
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+    color: rgb(236, 236, 95);
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.hero-image {
+    text-align: center;
+    animation: float 3s ease-in-out infinite;
+    margin-top: -20px;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.hero-image img {
+    width:200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 8px solid white;
+    box-shadow: var(--shadow-hover);
+    text-align: center;
+}
+.features {
+  padding:150px,50px,100px ;
+position: relative;
+}
+.features h1 {
+  text-align: center;
+  font-size: 2.8rem;
+  margin-bottom: 80px;
+}
+.features h1::after {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 5px;
+  background: #e8606b;
+  margin: 30px auto 0;
+}
+.card-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  column-gap: 30px;
+}
+.game-features {
+  text-align: center;
+  padding: 40px 30px;
+}
+.game-features img {
+width: 100%;
+object-fit: cover;
+}
+.game-features h3 {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+.game-features:hover {
+  transform: scale(1.05);
+}
+.game-features {
+            background: rgba(156, 195, 233, 0.4);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 70, 84, 0.15);
+            backdrop-filter: blur(5px);
+        }
+        
+        .game-features:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 70, 84, 0.4);
+            background: rgba(222, 227, 232, 0.5);
+        }
+       
+        ul li:not(:first-child) a::after{
+        /* 设置内容为空 */
+        content: "";
+        width: 0;
+        height: 3px;
+        /* 设置背景颜色 */
+        background-color: red;
+        /* 子元素设置绝对定位 */
+        position:absolute;
+        left: 0;
+        bottom: 0;
+        /* 设置过度效果 */
+        transition: width 0.3s linear;
+    }
+    ul li:not(:first-child) a:hover{
+        color: red;
+    }
+    ul li:not(:first-child) a:hover::after{
+        width: 100%;
+    }
+    ul li:nth-child(1) a {
+        color: red;
+        border-bottom: 3px solid red;
+    }
+   footer {
+      background: #2c3e50;
+      padding: 4rem 5%;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: rgb(28, 28, 28);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .social-link {
+      font-size: 1.8rem;
+      color: rgb(7, 7, 7,0.6);
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.2);
+      color: rgb(56, 113, 235);
+      text-shadow: var(--glow);
+    }
+
+    .copyright {
+      color: rgba(7, 7, 7, 0.6);
+      font-size: 0.9rem;
+      margin-top: -20px;
+    }
+    .skills {
+    padding: 5rem 0;
+    background-color: var(--light-gray);
+    background: #a1a5a8;
+    border-radius: 10px;
+   
+}
+
+.tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.tag {
+    padding: 10px 20px;
+    background-color: rgb(242, 240, 240);
+    border-radius: 30px;
+    font-weight: 600;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.tag:hover {
+    background-color: #667eea;
+    color: rgb(244, 244, 246);
+    transform: scale(1.05);
+}
+.section-title {
+    text-align: center;
+    
+}
+
+.container h2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight:300 ;
+    font-size: 40px;
+}
+.container h2::after {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 5px;
+  background: #e8606b;
+  margin: 30px auto 0;
+}
+/* 导航栏容器 */
+        .navbar {
+           background: linear-gradient(90deg,#1a2b4c,#2d4068);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+        }
+
+       
+        
+       
+       
+
+        /* 桌面端菜单 */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        /* 汉堡按钮样式 */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: rgb(171, 150, 150);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        /* 响应式：移动端隐藏菜单，显示汉堡按钮 */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 250px;
+                background-color: #41546f;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in;
+                z-index: 999;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            /* 菜单展开状态 */
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            /* 汉堡按钮动画：变成叉号 */
+            .hamburger.active div:nth-child(1) {
+                transform: rotate(45deg) translateY(8px);
+            }
+
+            .hamburger.active div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active div:nth-child(3) {
+                transform: rotate(-45deg) translateY(-8px);
+            }
+        }
+   .btn {
+    display: block;
+    padding: 12px 28px;
+    background-color: blue;
+    color: rgb(253, 253, 253);
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    text-align: center;
+    width: 20%;
+    margin: 0 auto;
+    padding: 10px;
+   }
+
+.btn:hover {
+    background-color: rgb(59, 82, 182);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+   
+}
+
+.btn-accent {
+    background-color: blue;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid blue;
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: blue;
+    color: white;
+}
+
+      /* 视频父容器：控制背景范围（这里设为全屏） */
+.video-bg-container {
+  position: relative; /* 让视频的绝对定位相对于自己 */
+  width: 100%;
+  min-height: 100vh; /* 占满整个视口高度 */
+  overflow: hidden; /* 隐藏视频超出容器的部分 */
+}
+
+/* 背景视频：铺满容器、置于下层 */
+.video-bg {
+  position: absolute; /* 脱离文档流，作为背景 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90%;
+  object-fit: cover; /* 保持视频比例，填满容器（自动裁剪边缘） */
+  z-index: -1; /* 层级设为负数，让内容叠在上面 */
+}
+
+/* 页面内容：确保在视频上方，可自定义样式 */
+.content {
+  position: relative; /* 确保层级高于视频 */
+  padding: 50px;
+  color: #fff; /* 文字设为白色，避免和视频混在一起 */
+  text-align: center;
+} 
+.articles {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 3px;
+            background: #3498db;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .article-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .article-card-content {
+            padding: 1.5rem;
+        }
+
+        .article-title {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 新增：文章描述的基础样式 */
+        .article-desc {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        /* 新增：收起状态的样式 */
+        .article-desc.collapsed {
+            display: -webkit-box;
+            -webkit-line-clamp:3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* 新增：展开状态的样式 */
+        .article-desc.expanded {
+            display: block;
+            max-height: none;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #3498db;
+            color: #fff;
+            border-radius: 4px;
+            transition:  0.3s;
+            cursor: pointer; /* 新增：添加鼠标指针样式 */
+        }
+
+        .article-btn:hover {
+            background: #2980b9;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="header">
+        <nav class="navbar">
+        <div class="logo">
+            <a href="index.html" class="text">
+                <img src="211.png" alt="">
+            </a>
+        <a href="index.html" class="logo-text">博客主页</a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="博客.html">博客</a></li>
+            <li><a href="作品集.html">作品集</a></li>
+            <li><a href="关于我.html">关于我</a></li>
+            <li><a href="文章示例.html">文章示例</a></li>
+        </ul>
+        <div class="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </nav>
+
+    <script>
+        // 获取元素
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        // 点击汉堡按钮切换菜单状态
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // 点击菜单链接关闭菜单
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+    </script>
+    
+    </div>
+    
+    
+        
+    </header>
+    <!-- 背景视频的父容器：控制视频的范围（比如全屏背景） -->
+<div class="video-bg-container">
+  <!-- 背景视频 -->
+  <video class="video-bg" autoplay muted loop playsinline poster="封面图.jpg">
+    <!-- 提供不同格式的视频，兼容更多浏览器 -->
+    <source src="201.mp4" type="video/mp4">
+    
+  </video>
+
+  <!-- 页面内容：叠在视频上方 -->
+  <div class="content">
+    <section class="hero">
+    
+        <div class="container">
+            <div class="hero-content">
+               
+ <div class="hero-image">
+                    <img src="people.jpg" alt="个人头像">
+                </div>
+  </div>
+</div>
+                <div class="hero-text">
+                    <h1>👋你好，我是<span style="color: #e8606b;">时海政</span></h1>
+                    <p>他日卧龙终得雨，今朝放鹤且冲天。
+知不足而奋进，望远山而立行。</p>
+                    <a href="关于我.html" class="btn">了解更多</a>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </section>
+  </div>
+</div>
+    
+<section class="features">
+                <h1>三剑客</h1>
+                <div class="card-features">
+           <div class="game-features">
+            <img src="104.jpg" alt="">
+            <h3>HTML——剑之躯</h3>
+            <p>HTML，被誉为“一剑”，其超文本标记语言的技能独树一帜。它通过标签定义了网页的结构和内容，是网页的基础。HTML，即超文本标记语言，由一系列标签构成，通过将这些需要展示的内容放入相应的标签中，便能够实现页面的显示。</p>
+            </div>
+            <div class="game-features">
+                <img src="103.jpg" alt="">
+                <h3>CSS——剑之美</h3>
+                <p>CSS，作为“二剑”，则负责页面的样式设计。通过它我们可以控制页面的布局、颜色和字体等元素，使页面更加美观。CSS不仅能为网页增添静态的修饰效果，还能与各种脚本语言协同工作，实现网页元素的动态格式化。</p>
+            </div>
+            <div class="game-features">
+                <img src="106.jpg" alt="">
+                <h3>CSS——剑之趣味</h3>
+                <p>JavaScript，常被简称为JS，被誉为“三剑”，以其强大的交互功能著称。它能够处理许多动态行为，让网页变得更加生动有趣。无论是切换页面、触发动画，还是实现各种交互效果，JavaScript都能轻松应对。</p>
+            </div>
+           </section>
+             
+            <section class="articles">
+        <div class="container">
+            <h2 class="section-title">精选文章</h2>
+            <div class="article-list">
+                <div class="article-card">
+                    <img src="102.jpg" alt="文章封面">
+                    <div class="article-card-content">
+                        <h3 class="article-title">HTML5+CSS3新特性实战</h3>
+                        <p class="article-desc collapsed">从语义化标签重构页面结构，到CSS3动画、弹性布局与网格布局的实战落地，本文通过3个完整案例，带你吃透HTML5+CSS3核心新特性。拒绝纸上谈兵，每一个知识点都搭配可直接运行的代码片段，帮助你快速将新技术转化为开发能力。</p>
+                        <div class="article-meta">
+                            <span>2026-01-05</span>
+                            <span>前端 / 基础</span>
+                        </div>
+                        <div class="article-btn" onclick="toggleDesc(this)">阅读更多</div>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <img src="105.png" alt="文章封面">
+                    <div class="article-card-content">
+                        <h3 class="article-title">JavaScript异步编程详解</h3>
+                        <p class="article-desc collapsed">深入解析Promise的状态管理与异常捕获，掌握async/await的最佳实践与避坑指南。本文结合多个真实业务场景案例，带你实现异步请求的串行、并行控制，以及复杂异步流程的优雅封装，大幅提升前端代码的可读性与可维护性。</p>
+                        <div class="article-meta">
+                            <span>2026-01-03</span>
+                            <span>前端 / JS</span>
+                        </div>
+                        <div class="article-btn" onclick="toggleDesc(this)">阅读更多</div>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <img src="101.webp" alt="文章封面">
+                    <div class="article-card-content">
+                        <h3 class="article-title">响应式布局的实现方法</h3>
+                        <p class="article-desc collapsed">从媒体查询的基础适配，到Flex弹性布局、Grid网格布局的灵活运用，再到流式布局、响应式图片等辅助技巧，本文汇总了响应式布局的核心实现方法。通过对比不同方案的适用场景与优缺点，帮你快速选择最适合项目的响应式解决方案。</p>
+                        <div class="article-meta">
+                            <span>2026-01-01</span>
+                            <span>前端 / 布局</span>
+                        </div>
+                        <div class="article-btn" onclick="toggleDesc(this)">阅读更多</div>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <img src="107.webp" alt="文章封面">
+                    <div class="article-card-content">
+                        <h3 class="article-title">Vue3组合式API实战指南</h3>
+                        <p class="article-desc collapsed">从响应式系统的重构，到组合式API的设计理念，本文不仅带你掌握 setup 、 provide/inject 、 生命周期钩子 的使用方法，更会深入剖析组合式API的底层实现逻辑。通过理解其“逻辑组合”的核心思想，帮助你在项目中做出更优的架构设计，充分发挥Vue3的性能优势。</p>
+                        <div class="article-meta"> 
+                            <span>2025-12-28</span>
+                            <span>前端 / Vue</span>
+                        </div>
+                        <div class="article-btn" onclick="toggleDesc(this)">阅读更多</div>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <img src="108.png" alt="文章封面">
+                    <div class="article-card-content">
+                        <h3 class="article-title">React Hooks核心原理与应用</h3>
+                        <p class="article-desc collapsed">深入挖掘React Hooks的实战价值，重点讲解自定义Hook的封装与复用技巧。本文结合表单验证、数据请求、防抖节流等高频业务场景，带你封装可跨组件复用的通用Hook，彻底解决类组件中逻辑复用的痛点。同时附带Hooks的性能优化方案与避坑指南，让你的项目开发效率与代码质量双提升。</p>
+                        <div class="article-meta">
+                            <span>2025-12-25</span>
+                            <span>前端 / React</span>
+                        </div>
+                        <div class="article-btn" onclick="toggleDesc(this)">阅读更多</div>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <img src="109.jpg" alt="文章封面">
+                    <div class="article-card-content">
+                        <h3 class="article-title">前端性能优化的10个实用技巧</h3>
+                        <p class="article-desc collapsed">CDN加速、代码分割、缓存策略配置、Tree Shaking减包、懒加载组件等核心方案，每个技巧都标注了适用场景、实现成本与优化收益。无论是新项目搭建还是老项目重构，都能帮你高效完成性能调优。</p>
+                        <div class="article-meta">
+                        <span>2025-12-20</span>
+                            <span>前端 / 性能</span>
+                        </div>
+                        <div class="article-btn" onclick="toggleDesc(this)">阅读更多</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> 
+            <section class="skills">
+        <div class="container">
+            <h2 class="section-title">技术栈与兴趣</h2>
+            <div class="tags-cloud">
+                <span class="tag">HTML5</span>
+                <span class="tag">CSS3</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">React</span>
+                <span class="tag">Vue.js</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">Python</span>
+                <span class="tag">UI/UX设计</span>
+                <span class="tag">响应式设计</span>
+                <span class="tag">Web性能优化</span>
+                <span class="tag">Git</span>
+                <span class="tag">Docker</span>
+                <span class="tag">云原生</span>
+                <span class="tag">机器学习</span>
+                <span class="tag">摄影</span>
+                <span class="tag">旅行</span>
+                <span class="tag">阅读</span>
+            </div>
+        </div>
+    </section>
+          <footer id="contact">
+    <h3 class="footer-title">邮箱：2489013285@qq.com</h3>
+     <p class="copyright"> © 2026 时海政的个人简历 | 基于博客教程创建</p>
+  
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+      <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+    </div>
+   </footer>
+</body>
+</html>
+<script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const closeBtn = document.getElementById('closeBtn');
+
+        hamburgerBtn.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+        });
+
+        document.querySelectorAll('.mobile-nav-list a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        });
+        function toggleDesc(btn) {
+          
+            const descElement = btn.parentElement.querySelector('.article-desc');
+        
+            if (descElement.classList.contains('collapsed')) {
+                descElement.classList.remove('collapsed');
+                descElement.classList.add('expanded');
+                btn.textContent = '收起';
+            } else {
+                descElement.classList.remove('expanded');
+                descElement.classList.add('collapsed');
+                btn.textContent = '阅读更多'; 
+            }
+        }
+    </script>

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>炫酷个人作品集 | Portfolio</title>
+  <style>
+    /* 全局变量 & 基础样式 */
+    :root {
+      --primary: #6366f1;    /* 主色：靛蓝 */
+      --secondary: #ec4899;  /* 辅助色：玫红 */
+      --dark: #0f172a;       /* 深色 */
+      --light: #f8fafc;      /* 浅色 */
+      --glow: 0 0 15px rgba(99, 102, 241, 0.6);
+      --transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", "Microsoft Yahei", sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 鼠标跟随特效 */
+    .cursor-follower {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease;
+      opacity: 0.7;
+    }
+
+    /* 导航栏 - 悬浮玻璃质感 */
+    .header {
+       
+    background-color: white;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    animation: slideDown 0.5s ease-out;
+    box-shadow: 0px 2px 0px rgb(161, 156, 156);
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+   nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    height: 65px;
+}
+
+.logo {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+             
+
+.logo a {
+    text-decoration: none;
+}
+.logo img {
+    width: 100px;
+            margin-right: 80px;
+            border-radius: 50%;
+}
+.logo-text {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-left: -80px;
+            
+            
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+
+    
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: var(--accent-color);
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+/* 导航栏容器 */
+        .navbar {
+          background: linear-gradient(90deg,#1a2b4c,#2d4068);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100px;;
+        }
+
+       
+        
+       
+       
+
+        /* 桌面端菜单 */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+    font-weight: 600;
+    transition: var(--transition);
+    position: relative;
+    padding: 0.5rem 0;
+}
+        
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        /* 汉堡按钮样式 */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: rgb(171, 150, 150);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        /* 响应式：移动端隐藏菜单，显示汉堡按钮 */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 250px;
+                background-color: #41546f;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in;
+                z-index: 999;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            /* 菜单展开状态 */
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            /* 汉堡按钮动画：变成叉号 */
+            .hamburger.active div:nth-child(1) {
+                transform: rotate(45deg) translateY(8px);
+            }
+
+            .hamburger.active div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active div:nth-child(3) {
+                transform: rotate(-45deg) translateY(-8px);
+            }
+        }
+    /* 英雄区 - 视差+渐变背景 */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 5%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 40%, rgba(99, 102, 241, 0.2), transparent 70%),
+                  radial-gradient(circle at 70% 80%, rgba(236, 72, 153, 0.2), transparent 70%);
+      z-index: -1;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: var(--glow);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+      max-width: 800px;
+      margin-bottom: 3rem;
+    }
+
+    .cta-btn {
+      padding: 1rem 2.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--glow);
+    }
+
+    .cta-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.8);
+    }
+
+    /* 作品集区域 - 3D网格布局 */
+    .portfolio {
+      padding: 8rem 5%;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 3rem;
+      perspective: 1000px;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: var(--transition);
+      transform-style: preserve-3d;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .project-card:hover {
+      transform: translateY(-15px) rotateY(5deg) rotateX(5deg);
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+    }
+
+    .project-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .project-card:hover .project-img {
+      transform: scale(1.1);
+      filter: brightness(1.1);
+    }
+
+    .project-content {
+      padding: 1.8rem;
+    }
+
+    .project-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--light);
+    }
+
+    .project-desc {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .tag {
+      padding: 0.5rem 1rem;
+      background: rgba(99, 102, 241, 0.2);
+      color: var(--primary);
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .link-btn {
+      padding: 0.7rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .demo-btn {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: white;
+    }
+
+    .code-btn {
+      background: transparent;
+      color: var(--light);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .link-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--glow);
+    }
+
+    /* 技能区 - 渐变卡片 */
+    .skills {
+      padding: 8rem 5%;
+      background: linear-gradient(180deg, var(--dark), #1e293b);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .skill-card {
+      padding: 2rem;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+      border-radius: 15px;
+      text-align: center;
+      transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .skill-card:hover {
+      transform: translateY(-10px);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2));
+      box-shadow: var(--glow);
+    }
+
+    .skill-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .skill-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .skill-level {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* 页脚 - 渐变+发光 */
+    footer {
+      padding: 4rem 5%;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .social-link {
+      font-size: 1.8rem;
+      color: var(--light);
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.2);
+      color: var(--primary);
+      text-shadow: var(--glow);
+    }
+
+    .copyright {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+      margin-top: -20px;
+    }
+
+    /* 响应式适配 */
+    @media (max-width: 768px) {
+      .nav-links {
+        gap: 1.5rem;
+      }
+
+      .hero-title {
+        font-size: clamp(2rem, 8vw, 4rem);
+      }
+
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 5%;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-card:hover {
+        transform: translateY(-10px) rotateY(0) rotateX(0);
+      }
+    }
+  </style>
+  <!-- 引入字体图标 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- 鼠标跟随特效 -->
+  <div class="cursor-follower"></div>
+
+  <!-- 导航栏 -->
+  <div class="header">
+        <nav class="navbar">
+        <div class="logo">
+            <a href="index.html" class="text">
+                <img src="211.png" alt="">
+            </a>
+        <a href="index.html" class="logo-text">博客主页</a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="博客.html">博客</a></li>
+            <li><a href="作品集.html">作品集</a></li>
+            <li><a href="关于我.html">关于我</a></li>
+            <li><a href="文章示例.html">文章示例</a></li>
+        </ul>
+        <div class="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </nav>
+    </div>
+    <script>
+        // 获取元素
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        // 点击汉堡按钮切换菜单状态
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // 点击菜单链接关闭菜单
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+    </script>
+    
+    </div>
+  <!-- 英雄区 -->
+  <section class="hero" id="home">
+    <h1 class="hero-title">我的创意作品集</h1>
+    <p class="hero-subtitle">展示我的Web开发、移动端项目及课程设计作品</p>
+    <button class="cta-btn" onclick="document.getElementById('portfolio').scrollIntoView()">
+      查看作品 <i class="fas fa-arrow-down"></i>
+    </button>
+  </section>
+
+  <!-- 作品集区域 -->
+  <section class="portfolio" id="portfolio">
+    <h2 class="section-title">精选项目</h2>
+    <div class="project-grid">
+      <!-- 项目1 -->
+      <div class="project-card">
+        <img src="魔兽.jpg" alt="魔兽契约" class="project-img">
+        <div class="project-content">
+          <h3 class="project-title">魔兽世界</h3>
+          <p class="project-desc">MMO 界的不朽标杆，艾泽拉斯大陆藏着宏大史诗与细腻风景。战法牧分工、团队副本等设计定义网游范式，公会情谊与青春回忆交织，二十载更新迭代仍具活力，早已超越游戏本身，成为一代人的集体情怀。</p>
+          <div class="project-tags">
+            <span class="tag">HTML5</span>
+            <span class="tag">CSS3</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">响应式</span>
+          </div>
+          <div class="project-links">
+            <a href="魔兽世界.html" class="link-btn demo-btn">在线演示</a>
+            <a href="#" class="link-btn code-btn">查看源码</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 项目2 -->
+      <div class="project-card">
+        <img src="无畏契约图片.jpg" alt="无畏契约" class="project-img">
+        <div class="project-content">
+          <h3 class="project-title">无畏契约</h3>
+          <p class="project-desc">拳头打造的战术射击标杆，5v5 爆破核心融合英雄技能，低门槛上手与高竞技性兼具。快节奏对战 + 多元模式，枪法与策略碰撞，赛事观赏性拉满，虽有环境争议，但仍是全球热门的电竞佳作。</p>
+          <div class="project-tags">
+            <span class="tag">Vue.js</span>
+            <span class="tag">Axios</span>
+            <span class="tag">移动端</span>
+            <span class="tag">API</span>
+          </div>
+          <div class="project-links">
+            <a href="无畏契约.html" class="link-btn demo-btn">在线演示</a>
+            <a href="#" class="link-btn code-btn">查看源码</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 项目3 -->
+      <div class="project-card">
+        <img src="表单.jpg" alt="表单" class="project-img">
+        <div class="project-content">
+          <h3 class="project-title">高效表单</h3>
+          <p class="project-desc">Web 交互核心载体，衔接用户输入与数据处理，结构设计直接影响体验。字段布局、校验逻辑、反馈提示是关键，简洁高效的表单能大幅降低用户操作成本，提升数据提交转化率。</p>
+          <div class="project-tags">
+            <span class="tag">React</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">MongoDB</span>
+            <span class="tag">全栈</span>
+          </div>
+          <div class="project-links">
+            <a href="表单.html" class="link-btn demo-btn">在线演示</a>
+            <a href="#" class="link-btn code-btn">查看源码</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 项目4 -->
+      <div class="project-card">
+        <img src="作品页1.jpeg" alt="待办小程序" class="project-img">
+        <div class="project-content">
+          <h3 class="project-title">作品模板</h3>
+          <p class="project-desc">以渐变美学与卡片布局为核心，集导航、技能、作品展示模块于一体，悬停动画灵动，响应式适配全设备，极简代码即可打造高级质感个人主页。</p>
+          <div class="project-tags">
+            <span class="tag">微信小程序</span>
+            <span class="tag">云开发</span>
+            <span class="tag">交互设计</span>
+          </div>
+          <div class="project-links">
+            <a href="作品页.html" class="link-btn demo-btn">在线演示</a>
+            <a href="#" class="link-btn code-btn">查看源码</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 项目5 -->
+      <div class="project-card">
+        <img src="biaoqing.jpg" alt="表情" class="project-img">
+        <div class="project-content">
+          <h3 class="project-title">示例跳动</h3>
+          <p class="project-desc">互联网社交的 “百搭神器”，魔性笑脸自带戏谑 buff，吐槽、调侃、化解尴尬样样在行，用极简画风承包了无数欢乐时刻，堪称表情包界的常青树。</p>
+          <div class="project-tags">
+            <span class="tag">PHP</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">ECharts</span>
+            <span class="tag">后台开发</span>
+          </div>
+          <div class="project-links">
+            <a href="示例跳动.html" class="link-btn demo-btn">在线演示</a>
+            <a href="#" class="link-btn code-btn">查看源码</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 项目6 -->
+      <div class="project-card">
+        <img src="ps1.jpg" alt="3D官网" class="project-img">
+        <div class="project-content">
+          <h3 class="project-title">Ps图集</h3>
+          <p class="project-desc">设计界的标杆工具，集图像编辑、合成、特效制作于一体。功能强大且操作灵活，从日常修图到专业平面设计都能胜任，是设计师和创意爱好者不可或缺的高效利器。</p>
+          <div class="project-tags">
+            <span class="tag">Three.js</span>
+            <span class="tag">3D可视化</span>
+            <span class="tag">WebGL</span>
+            <span class="tag">动效设计</span>
+          </div>
+          <div class="project-links">
+            <a href="ps.html" class="link-btn demo-btn">在线演示</a>
+            <a href="#" class="link-btn code-btn">查看源码</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技能区 -->
+  <section class="skills" id="skills">
+    <h2 class="section-title">我的技能</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon"><i class="fab fa-html5"></i></div>
+        <h3 class="skill-name">HTML5</h3>
+        <p class="skill-level">精通</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+        <h3 class="skill-name">CSS3</h3>
+        <p class="skill-level">精通</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><i class="fab fa-js"></i></div>
+        <h3 class="skill-name">JavaScript</h3>
+        <p class="skill-level">精通</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><i class="fab fa-vuejs"></i></div>
+        <h3 class="skill-name">Vue.js</h3>
+        <p class="skill-level">熟练</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><i class="fab fa-react"></i></div>
+        <h3 class="skill-name">React</h3>
+        <p class="skill-level">熟练</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><i class="fas fa-database"></i></div>
+        <h3 class="skill-name">MySQL</h3>
+        <p class="skill-level">熟练</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer id="contact">
+    <h3 class="footer-title">邮箱：2489013285@qq.com</h3>
+     <p class="copyright"> © 2026 时海政的个人简历 | 基于博客教程创建</p>
+  
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+      <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+    </div>
+   </footer>
+
+  <!-- 交互逻辑JS -->
+  <script>
+    // 鼠标跟随特效
+    const cursor = document.querySelector('.cursor-follower');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+    });
+
+    // 视差滚动效果
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const hero = document.querySelector('.hero');
+      hero.style.backgroundPositionY = `${scrollY * 0.5}px`;
+    });
+
+    // 滚动时导航栏样式变化
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.style.background = 'rgba(15, 23, 42, 0.95)';
+        nav.style.padding = '1rem 5%';
+      } else {
+        nav.style.background = 'rgba(15, 23, 42, 0.8)';
+        nav.style.padding = '1.2rem 5%';
+      }
+    });
+
+    // 项目卡片hover增强
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        cursor.style.width = '80px';
+        cursor.style.height = '80px';
+        cursor.style.opacity = '0.3';
+      });
+      card.addEventListener('mouseleave', () => {
+        cursor.style.width = '20px';
+        cursor.style.height = '20px';
+        cursor.style.opacity = '0.7';
+      });
+    });
+  </script>
+</body>
+</html>

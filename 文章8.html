@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML实现视频背景的完整代码 | 3种方案+避坑指南</title>
+ <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="shortcut icon" href="211.png" type="image/x-icon">
+ <style>
+    /* 全局样式：热门技术文章风格 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft Yahei", "PingFang SC", sans-serif;
+    }
+    body {
+      background-color: #f0f2f5;
+      color: #333;
+      line-height: 1.8;
+    }
+    /* 顶部热门标签栏 */
+    .hot-tag-bar {
+      background-color: #e63946;
+      color: #fff;
+      padding: 8px 0;
+      text-align: center;
+      font-size: 14px;
+    }
+    .hot-tag-bar span {
+      margin: 0 8px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    /* 文章头部：吸睛设计 */
+    .article-header {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 40px 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    /* 头部装饰 */
+    .article-header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #4285f4, #e63946, #f9c74f);
+    }
+    .article-title {
+      font-size: 30px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    .article-subtitle {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: #888;
+    }
+    .meta-tag {
+      background-color: #f0f2f5;
+      padding: 4px 12px;
+      border-radius: 20px;
+      color: #4285f4;
+    }
+    .meta-read {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* 文章内容 */
+    .article-content {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 40px 30px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+    }
+    .content-section {
+      margin-bottom: 50px;
+    }
+    .section-title {
+      font-size: 22px;
+      color: #1a1a1a;
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f0f2f5;
+      position: relative;
+    }
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 2px;
+      background-color: #4285f4;
+    }
+    .section-subtitle {
+      font-size: 18px;
+      color: #222;
+      margin: 20px 0 15px;
+      font-weight: 600;
+    }
+    .section-text {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .section-text strong {
+      color: #4285f4;
+    }
+
+    /* 代码块：高亮样式 */
+    .code-block {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      font-family: "Consolas", "Monaco", monospace;
+      font-size: 14px;
+      color: #2d3748;
+      overflow-x: auto;
+      margin: 20px 0;
+      border: 1px solid #eee;
+      position: relative;
+    }
+    .code-block::before {
+      content: "代码示例";
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      background-color: #4285f4;
+      color: #fff;
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    /* 效果演示区 */
+    .demo-area {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 25px;
+      margin: 20px 0;
+      background-color: #fafafa;
+    }
+    .demo-title {
+      font-size: 16px;
+      color: #4285f4;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    /* 视频背景演示容器 */
+    .video-bg-demo {
+      width: 100%;
+      height: 300px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    .video-bg-demo video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+    .video-bg-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      background-color: rgba(0,0,0,0.3);
+    }
+    .video-bg-content h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .video-bg-content p {
+      font-size: 16px;
+    }
+
+    /* 避坑指南卡片 */
+    .tips-card {
+      background-color: #fff8e1;
+      border-left: 4px solid #ffc107;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 25px 0;
+    }
+    .tips-card h4 {
+      color: #ff8f00;
+      margin-bottom: 10px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tips-card ul {
+      padding-left: 20px;
+      color: #555;
+    }
+    .tips-card li {
+      margin-bottom: 8px;
+    }
+
+    /* 列表样式 */
+    .content-list {
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+    .content-list li {
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    /* 热门推荐 */
+    .hot-recommend {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+    }
+    .hot-recommend h3 {
+      font-size: 18px;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+    }
+    .recommend-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 15px;
+    }
+    .recommend-item {
+      padding: 15px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      transition: box-shadow 0.3s;
+    }
+    .recommend-item:hover {
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+    .recommend-item a {
+      color: #4285f4;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .recommend-item p {
+      font-size: 13px;
+      color: #888;
+      margin-top: 8px;
+    }
+
+    /* 响应式适配 */
+    @media (max-width: 768px) {
+      .article-title {
+        font-size: 24px;
+      }
+      .article-header, .article-content {
+        padding: 25px 20px;
+      }
+      .section-title {
+        font-size: 20px;
+      }
+      .video-bg-demo {
+        height: 200px;
+      }
+      .recommend-list {
+        grid-template-columns: 1fr;
+      }
+    }
+    footer {
+      background: #2c3e50;
+      padding: 4rem 5%;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: rgb(28, 28, 28);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .social-link {
+      font-size: 1.8rem;
+      color: rgb(7, 7, 7,0.6);
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.2);
+      color: rgb(56, 113, 235);
+      text-shadow: var(--glow);
+    }
+
+    .copyright {
+      color: rgba(7, 7, 7, 0.6);
+      font-size: 0.9rem;
+      margin-top: -20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部热门标签 -->
+  <div class="hot-tag-bar">
+    <span>🔥 前端热门技巧</span>
+    <span>📝 完整可复用代码</span>
+    <span>🚀 实战避坑指南</span>
+  </div>
+
+  <div class="container">
+    <!-- 文章头部 -->
+    <header class="article-header">
+      <h1 class="article-title">HTML实现视频背景的完整代码 | 3种方案+避坑指南</h1>
+      <p class="article-subtitle">告别静态图片背景！用HTML+CSS打造沉浸式视频背景，附适配/性能优化技巧</p>
+      <div class="article-meta">
+        <span class="meta-tag">HTML/CSS</span>
+        <span>发布时间：2026-01-08</span>
+        <span class="meta-read">👀 阅读量：12.8k</span>
+        <span>👍 点赞：896</span>
+      </div>
+    </header>
+
+    <!-- 文章内容 -->
+    <main class="article-content">
+      <!-- 模块1：视频背景的应用场景 -->
+      <section class="content-section">
+        <h2 class="section-title">一、为什么要做视频背景？应用场景+优势</h2>
+        <p class="section-text">
+          视频背景是现代网页设计的热门趋势，相比静态图片，它能：
+        </p>
+        <ul class="content-list">
+          <li><strong>提升视觉冲击力</strong>：动态视频让网页更生动，第一时间抓住用户注意力；</li>
+          <li><strong>增强沉浸感</strong>：适合官网首页、产品介绍页、品牌落地页，强化品牌调性；</li>
+          <li><strong>降低跳出率</strong>：动态内容比静态内容更能留住用户，提升页面停留时间。</li>
+        </ul>
+        <p class="section-text">
+          核心应用场景：企业官网首页Banner、产品宣传页、个人作品集封面、活动专题页等。
+        </p>
+      </section>
+
+      <!-- 模块2：核心方案1：原生video标签实现（最常用） -->
+      <section class="content-section">
+        <h2 class="section-title">二、核心方案1：原生video标签实现（推荐）</h2>
+        <p class="section-text">
+          这是最常用、兼容性最好的方案，通过HTML的<code>&lt;video&gt;</code>标签结合CSS定位实现，支持自动播放、循环、静音等核心需求。
+        </p>
+
+        <!-- 效果演示 -->
+        <div class="demo-area">
+          <div class="demo-title">效果演示（可直接查看）</div>
+          <div class="video-bg-demo">
+            <!-- 替换为自己的视频地址，建议用mp4格式 -->
+            <video autoplay loop muted playsinline>
+              <source src="yanshi.mp4" type="video/mp4">
+              您的浏览器不支持HTML5视频标签
+            </video>
+            <div class="video-bg-content">
+              <h3>视频背景演示</h3>
+              <p>自动播放 | 循环 | 静音 | 覆盖内容</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 完整代码 -->
+        <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+&lt;title&gt;视频背景示例&lt;/title&gt;
+&lt;style&gt;
+/* 视频背景容器 */
+.video-bg {
+  width: 100%;
+  height: 500px; /* 根据需求设置高度 */
+  position: relative; /* 相对定位，用于子元素绝对定位 */
+  overflow: hidden; /* 隐藏超出容器的视频部分 */
+}
+
+/* 视频标签样式 */
+.video-bg video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%); /* 居中显示 */
+  z-index: 1; /* 视频在底层 */
+}
+
+/* 视频上方的内容层 */
+.video-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* 内容在视频上层 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  /* 半透明遮罩，提升文字可读性 */
+  background-color: rgba(0, 0, 0, 0.3);
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="video-bg"&gt;
+  &lt;!-- 核心video标签：autoplay(自动播放)、loop(循环)、muted(静音)、playsinline(移动端内联播放) --&gt;
+  &lt;video autoplay loop muted playsinline&gt;
+    &lt;!-- 替换为自己的视频地址，建议使用mp4格式（兼容性最好） --&gt;
+    &lt;source src="your-video.mp4" type="video/mp4"&gt;
+    您的浏览器不支持HTML5视频标签，请升级浏览器
+  &lt;/video&gt;
+  &lt;div class="video-content"&gt;
+    &lt;h1&gt;这是视频背景上的标题&lt;/h1&gt;
+    &lt;p&gt;这是视频背景上的描述文字&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+
+        <!-- 关键属性说明 -->
+        <div class="section-subtitle">关键属性说明（必看）</div>
+        <ul class="content-list">
+          <li><strong>autoplay</strong>：自动播放（浏览器要求：必须配合muted静音才能自动播放）；</li>
+          <li><strong>loop</strong>：循环播放，保证背景持续播放；</li>
+          <li><strong>muted</strong>：静音播放，是自动播放的前提；</li>
+          <li><strong>playsinline</strong>：移动端内联播放，避免视频自动全屏；</li>
+          <li><strong>preload="auto"</strong>（可选）：提前加载视频，提升播放流畅度（慎用，影响首屏加载）。</li>
+        </ul>
+
+        <!-- 避坑指南 -->
+        <div class="tips-card">
+          <h4>⚠️ 避坑指南：自动播放失效？</h4>
+          <ul>
+            <li>原因1：未加muted属性 → 所有现代浏览器都要求自动播放的视频必须静音；</li>
+            <li>原因2：视频格式不兼容 → 优先用mp4格式，webm格式作为备选；</li>
+            <li>原因3：移动端浏览器限制 → 部分浏览器（如微信）需要用户首次交互后才能播放；</li>
+            <li>解决方案：添加海报图（poster属性），作为视频加载前/播放失败的兜底。</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 模块3：方案2：视频背景+图片兜底 -->
+      <section class="content-section">
+        <h2 class="section-title">三、进阶方案2：视频背景+图片兜底（更健壮）</h2>
+        <p class="section-text">
+          为了应对“视频加载慢、播放失败、移动端流量限制”等场景，添加图片兜底是最佳实践——视频加载完成前显示图片，视频播放失败时也能保证页面美观。
+        </p>
+        <div class="code-block">
+&lt;style&gt;
+.video-bg {
+  width: 100%;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+  /* 图片兜底：作为视频加载前/失败的背景 */
+  background: url("bg-fallback.jpg") center/cover no-repeat;
+}
+&lt;/style&gt;
+
+&lt;div class="video-bg"&gt;
+  &lt;video autoplay loop muted playsinline poster="bg-fallback.jpg"&gt;
+    &lt;source src="your-video.mp4" type="video/mp4"&gt;
+  &lt;/video&gt;
+  &lt;div class="video-content"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+        </div>
+        <p class="section-text">
+          核心：通过CSS的background设置兜底图片，同时给video标签加poster属性，双重保障。
+        </p>
+      </section>
+
+      <!-- 模块4：方案3：性能优化版（懒加载） -->
+      <section class="content-section">
+        <h2 class="section-title">四、高级方案3：懒加载视频背景（性能优化）</h2>
+        <p class="section-text">
+          视频背景体积较大（建议压缩到5-10MB以内），如果视频背景不在首屏，建议懒加载——页面滚动到视频区域时再加载播放，提升首屏加载速度。
+        </p>
+        <div class="code-block">
+&lt;div class="video-bg" id="lazyVideoBg"&gt;
+  &lt;video loop muted playsinline poster="bg-fallback.jpg"&gt;
+    &lt;source src="your-video.mp4" type="video/mp4"&gt;
+  &lt;/video&gt;
+  &lt;div class="video-content"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// 懒加载逻辑
+const videoBg = document.getElementById('lazyVideoBg');
+const video = videoBg.querySelector('video');
+
+// 监听滚动事件
+const observer = new IntersectionObserver((entries) =&gt; {
+  if (entries[0].isIntersecting) {
+    // 进入可视区，开始播放
+    video.play();
+    // 停止监听
+    observer.unobserve(videoBg);
+  }
+});
+
+// 监听视频容器
+observer.observe(videoBg);
+&lt;/script&gt;
+        </div>
+      </section>
+
+      <!-- 模块5：优化技巧总结 -->
+      <section class="content-section">
+        <h2 class="section-title">五、必看：视频背景优化技巧（提升体验）</h2>
+        <ul class="content-list">
+          <li><strong>视频压缩</strong>：用工具（如HandBrake）压缩视频，分辨率建议1920×1080，码率控制在1000kbps左右，体积≤10MB；</li>
+          <li><strong>格式适配</strong>：提供mp4（主流）+ webm（备选）格式，覆盖更多浏览器；</li>
+          <li><strong>移动端适配</strong>：小屏设备可直接替换为图片背景（媒体查询），节省流量；</li>
+          <li><strong>遮罩层</strong>：添加半透明遮罩（rgba），提升文字与视频的对比度，保证可读性；</li>
+          <li><strong>预加载控制</strong>：首屏视频用preload="metadata"（仅加载元数据），非首屏用懒加载。</li>
+        </ul>
+      </section>
+
+      <!-- 热门推荐 -->
+       
+    </main>
+  </div>
+ <footer id="contact">
+    <h3 class="footer-title">邮箱：2489013285@qq.com</h3>
+     <p class="copyright"> © 2026 时海政的个人简历 | 基于博客教程创建</p>
+  
+    <div class="social-links">
+      <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+      <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+    </div>
+   </footer>
+</body>
+</html>
